@@ -12534,7 +12534,7 @@
                     <div class="diagram-section">
                         <h5 style="color: var(--accent); margin-bottom: 1rem; text-align: center;">General D-Flip Flop Block Diagram</h5>
                         <div class="image-container">
-                            <img src="media/D_Flip Flop_understaning.png" alt="General D-Flip Flop Block Diagram with D input, clock, and Q output" class="responsive-image">
+                            <img src="media/D_Flip Flop_understaning.PNG" alt="General D-Flip Flop Block Diagram with D input, clock, and Q output" class="responsive-image">
                         </div>
                         <div style="text-align: center; margin-top: 1rem;">
                             <button id="d-flipflop-info-btn-lab10" type="button" class="btn btn-info">
@@ -12579,7 +12579,7 @@
                     <div class="diagram-section">
                         <h5 style="color: var(--accent); margin-bottom: 1rem; text-align: center;">General JK-Flip Flop Block Diagram</h5>
                         <div class="image-container">
-                            <img src="media/JK_Flip Flop_understaning.png" alt="General JK-Flip Flop Block Diagram with J, K inputs, clock, and Q output" class="responsive-image">
+                            <img src="media/JK_Flip Flop_understaning.PNG" alt="General JK-Flip Flop Block Diagram with J, K inputs, clock, and Q output" class="responsive-image">
                         </div>
                         <div style="text-align: center; margin-top: 1rem;">
                             <button id="jk-flipflop-info-btn-lab10" type="button" class="btn btn-info">
@@ -13294,7 +13294,7 @@
                 
                 <!-- JK Transition Truth Table Image -->
                 <div style="text-align: center; margin: 2rem 0;">
-                    <img src="media/JK-transition-truthtable.png" alt="JK Flip Flop Transition Truth Table" class="responsive-image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+                    <img src="media/JK-transition-truthtable.PNG" alt="JK Flip Flop Transition Truth Table" class="responsive-image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
                 </div>
                 
                 <!-- MOD-7 Counter Truth Table -->
@@ -19709,8 +19709,9 @@
                     return;
                 }
                 
-                // Preload most commonly used scripts
-                const criticalScripts = ['lab3-modal.js', 'lab4-modal.js'];
+                // Preload only the most critical scripts that are used immediately
+                // Removed lab3-modal.js and lab4-modal.js from preload as they're loaded on-demand
+                const criticalScripts = ['js/platformPreloader.js'];
                 criticalScripts.forEach(script => {
                     const link = document.createElement('link');
                     link.rel = 'preload';
