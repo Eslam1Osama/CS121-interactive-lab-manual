@@ -1,0 +1,173 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Define styles for the SVG elements -->
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap');
+            
+            .label {
+                font-family: 'Inter', sans-serif;
+                font-size: 16px;
+                font-weight: bold;
+                fill: #333;
+            }
+            .pin-label {
+                font-family: 'Inter', sans-serif;
+                font-size: 14px;
+                fill: #555;
+            }
+            .ff-body {
+                fill: #f3f4f6; /* light gray */
+                stroke: #1f2937; /* black */
+                stroke-width: 2;
+            }
+            .gate-body {
+                fill: #ffffff; /* white */
+                stroke: #1f2937; /* black */
+                stroke-width: 2;
+            }
+            .wire {
+                stroke: #1f2937; /* black */
+                stroke-width: 1.5;
+                fill: none;
+            }
+            .led {
+                fill: #ef4444; /* red */
+                stroke: #b91c1c;
+                stroke-width: 1;
+            }
+            .junction-dot {
+                fill: #1f2937;
+            }
+        </style>
+        
+        <!-- Reusable JK Flip-Flop Symbol with Q' output for completeness -->
+        <g id="jk-flip-flop">
+            <rect x="0" y="0" width="120" height="80" rx="5" class="ff-body"></rect>
+            <text x="10" y="25" class="pin-label">J</text>
+            <text x="10" y="65" class="pin-label">K</text>
+            <text x="100" y="25" class="pin-label">Q</text>
+            <text x="95" y="65" class="pin-label">Q'</text>
+            <line x1="120" y1="20" x2="130" y2="20" class="wire"></line>
+            <line x1="120" y1="60" x2="130" y2="60" class="wire"></line>
+            <!-- Standard dynamic clock input symbol -->
+            <path d="M0,35 l10,5 l-10,5 z" class="gate-body"></path>
+        </g>
+    </defs>
+
+    <!-- Background -->
+    <rect width="100%" height="100%" fill="#fff"></rect>
+
+    <!-- Main Inputs -->
+    <g id="main-inputs">
+        <text x="50" y="45" class="label">A</text>
+        <line x1="50" y1="50" x2="50" y2="550" class="wire"></line>
+        
+        <text x="100" y="45" class="label">B</text>
+        <line x1="100" y1="50" x2="100" y2="550" class="wire"></line>
+
+        <text x="150" y="45" class="label">C</text>
+        <line x1="150" y1="50" x2="150" y2="580" class="wire"></line>
+    </g>
+
+    <!-- Flip-Flops -->
+    <g id="flip-flops">
+        <use href="#jk-flip-flop" x="600" y="100"></use>
+        <text x="610" y="95" class="label">FF-A</text>
+        
+        <use href="#jk-flip-flop" x="600" y="300"></use>
+        <text x="610" y="295" class="label">FF-B</text>
+        
+        <use href="#jk-flip-flop" x="600" y="500"></use>
+        <text x="610" y="495" class="label">FF-C</text>
+    </g>
+    
+    <!-- Clock Line -->
+    <g id="clock">
+        <text x="540" y="45" class="label">CLK</text>
+        <line x1="550" y1="50" x2="550" y2="580" class="wire"></line>
+        <!-- Connections to FFs with junction dots -->
+        <line x1="550" y1="140" x2="600" y2="140" class="wire"></line>
+        <circle cx="550" cy="140" r="4" class="junction-dot"></circle>
+        <line x1="550" y1="340" x2="600" y2="340" class="wire"></line>
+        <circle cx="550" cy="340" r="4" class="junction-dot"></circle>
+        <line x1="550" y1="540" x2="600" y2="540" class="wire"></line>
+        <circle cx="550" cy="540" r="4" class="junction-dot"></circle>
+    </g>
+
+    <!-- Logic for FF-A -->
+    <g id="logic-ffa">
+        <text x="450" y="105" class="pin-label">JA = B ⋅ C</text>
+        <!-- AND gate for JA -->
+        <path d="M400,110 h20 a20,20 0 0 1 0,40 h-20 z" class="gate-body"></path>
+        <polyline points="440,130 580,130 580,125 600,125" class="wire"></polyline>
+        <line x1="100" y1="120" x2="400" y2="120" class="wire"></line>
+        <circle cx="100" cy="120" r="4" class="junction-dot"></circle>
+        <line x1="150" y1="140" x2="400" y2="140" class="wire"></line>
+        <circle cx="150" cy="140" r="4" class="junction-dot"></circle>
+
+        <text x="450" y="185" class="pin-label">KA = B</text>
+        <polyline points="100,170 580,170 580,165 600,165" class="wire"></polyline>
+        <circle cx="100" cy="170" r="4" class="junction-dot"></circle>
+    </g>
+    
+    <!-- Logic for FF-B -->
+    <g id="logic-ffb">
+        <text x="450" y="315" class="pin-label">JB = C</text>
+        <polyline points="150,320 580,320 580,325 600,325" class="wire"></polyline>
+        <circle cx="150" cy="320" r="4" class="junction-dot"></circle>
+
+        <text x="450" y="355" class="pin-label">KB = C + A</text>
+        <!-- OR gate for KB -->
+        <path d="M400,380 Q415,400 400,420 C410,410 425,405 450,400 C425,395 410,390 400,380 z" class="gate-body"></path>
+        <polyline points="450,400 580,400 580,365 600,365" class="wire"></polyline>
+        <line x1="50" y1="390" x2="400" y2="390" class="wire"></line>
+        <circle cx="50" cy="390" r="4" class="junction-dot"></circle>
+        <line x1="150" y1="410" x2="400" y2="410" class="wire"></line>
+        <circle cx="150" cy="410" r="4" class="junction-dot"></circle>
+    </g>
+
+    <!-- Logic for FF-C -->
+    <g id="logic-ffc">
+        <text x="420" y="475" class="pin-label">JC = A' + B'</text>
+        <!-- NOT gates for A' and B' -->
+        <g transform="translate(250, 480)">
+            <path d="M 0 -8 L 20 0 L 0 8 Z" class="gate-body"></path>
+            <circle cx="25" cy="0" r="4" class="gate-body"></circle>
+        </g>
+        <line x1="50" y1="480" x2="250" y2="480" class="wire"></line>
+        <circle cx="50" cy="480" r="4" class="junction-dot"></circle>
+        
+        <g transform="translate(250, 520)">
+            <path d="M 0 -8 L 20 0 L 0 8 Z" class="gate-body"></path>
+            <circle cx="25" cy="0" r="4" class="gate-body"></circle>
+        </g>
+        <line x1="100" y1="520" x2="250" y2="520" class="wire"></line>
+        <circle cx="100" cy="520" r="4" class="junction-dot"></circle>
+        
+        <!-- OR gate for JC -->
+        <path d="M400,480 Q415,500 400,520 C410,510 425,505 450,500 C425,495 410,490 400,480 z" class="gate-body"></path>
+        <line x1="280" y1="480" x2="400" y2="480" class="wire"></line>
+        <line x1="280" y1="520" x2="400" y2="520" class="wire"></line>
+        <polyline points="450,500 580,500 580,525 600,525" class="wire"></polyline>
+
+        <text x="450" y="585" class="pin-label">KC = C</text>
+        <line x1="150" y1="565" x2="600" y2="565" class="wire"></line>
+        <circle cx="150" cy="565" r="4" class="junction-dot"></circle>
+    </g>
+
+    <!-- Outputs -->
+    <g id="outputs">
+        <line x1="730" y1="120" x2="800" y2="120" class="wire"></line>
+        <circle cx="810" cy="120" r="10" class="led"></circle>
+        <text x="830" y="125" class="label">QA</text>
+        
+        <line x1="730" y1="320" x2="800" y2="320" class="wire"></line>
+        <circle cx="810" cy="320" r="10" class="led"></circle>
+        <text x="830" y="325" class="label">QB</text>
+
+        <line x1="730" y1="520" x2="800" y2="520" class="wire"></line>
+        <circle cx="810" cy="520" r="10" class="led"></circle>
+        <text x="830" y="525" class="label">QC</text>
+    </g>
+</svg>
+
