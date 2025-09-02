@@ -1,0 +1,57 @@
+{
+    "name": "CS121 Digital Logic Design - Interactive Lab Manual",
+    "short_name": "CS121 Labs",
+    "description": "Comprehensive interactive lab manual for CS121 Digital Logic Design course. Features 11 complete lab experiments with interactive simulators, K-Map tools, and real-time circuit simulation.",
+    "version": "1.0.0",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#1a2a3a",
+    "theme_color": "#3498db",
+    "scope": "/",
+    "lang": "en",
+    "dir": "ltr",
+    "categories": ["education", "productivity", "utilities"],
+    "icons": [
+        {
+            "src": "favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "favicon-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "CS121 Lab Manual - Desktop View"
+        },
+        {
+            "src": "screenshot-narrow.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "CS121 Lab Manual - Mobile View"
+        }
+    ]
+}
