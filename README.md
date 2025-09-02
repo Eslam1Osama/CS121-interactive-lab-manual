@@ -137,32 +137,6 @@ This project is a **professional-grade interactive lab manual** for CS121 Digita
 4. **Accessibility Ready**: WCAG 2.1 AA compliant
 
 ---
-
-## 🏗️ **Project Structure**
-
-```
-cs121-interactive-lab-manual/
-├── 📄 index.html                 # Main application file
-├── 📄 offline.html              # Offline fallback page
-├── 📄 dev-server.js             # Development server
-├── 📄 sw.js                     # Service Worker
-├── 📁 js/
-│   └── 📄 platformPreloader.js  # Platform utilities
-├── 📁 media/                    # Optimized assets (35+ files)
-│   ├── 📄 favicon-*.png         # Favicon set
-│   ├── 📄 apple-touch-icon.png  # iOS app icon
-│   ├── 📄 site.webmanifest      # PWA manifest
-│   └── 📄 *.png, *.svg          # Circuit diagrams & images
-├── 📁 lab-*.js                  # Lab-specific modules
-├── 📄 robots.txt                # Search engine directives
-├── 📄 sitemap.xml               # Site structure
-├── 📄 DEPLOYMENT_CHECKLIST.md   # Deployment guide
-├── 📄 PERFORMANCE_OPTIMIZATION.md # Performance guide
-└── 📄 README.md                 # This file
-```
-
----
-
 ## ⚡ **Performance**
 
 ### **Optimization Results**
