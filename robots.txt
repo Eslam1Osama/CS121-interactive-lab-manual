@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cs121-labs.msa.edu.eg/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
