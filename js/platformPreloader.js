@@ -367,16 +367,32 @@
         },
         
         setupTouchOptimizations: function() {
-            if (platform.isMobile) {
+            if (platform.isMobile || window.isTouchDevice()) {
                 // Add touch-friendly styles
                 document.body.classList.add('touch-device');
                 
-                // Optimize touch targets
+                // Optimize touch targets with enhanced sizing for mobile
                 const touchTargets = document.querySelectorAll('button, a, input, select, textarea');
                 touchTargets.forEach(target => {
-                    target.style.minHeight = '44px';
-                    target.style.minWidth = '44px';
+                    const minSize = window.isMobileWidth() ? '48px' : '44px';
+                    target.style.minHeight = minSize;
+                    target.style.minWidth = minSize;
+                    target.style.touchAction = 'manipulation';
                 });
+                
+                // Ensure expand buttons are visible on mobile
+                if (window.isMobileWidth()) {
+                    setTimeout(() => {
+                        const expandBtns = document.querySelectorAll('.btn-info');
+                        expandBtns.forEach(btn => {
+                            if (btn.innerHTML.includes('Expand') || btn.innerHTML.includes('fa-expand')) {
+                                btn.style.display = 'inline-flex';
+                                btn.style.minHeight = '48px';
+                                btn.style.minWidth = '48px';
+                            }
+                        });
+                    }, 100);
+                }
             }
         },
         
@@ -531,7 +547,52 @@
             document.body.classList.add('local-file-mode');
         }
         
+        // Critical: Ensure mobile responsiveness synchronization
+        setupMobileSync();
+        
         // Platform initialization complete - no console logging for clean user experience
+    }
+    
+    // Enhanced Mobile Synchronization System
+    function setupMobileSync() {
+        function syncMobileFeatures() {
+            const isMobile = window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
+            
+            if (isMobile) {
+                document.body.classList.add('mobile-active');
+                
+                // Force expand button visibility - Critical Fix
+                setTimeout(() => {
+                    const expandBtns = document.querySelectorAll('.btn-info');
+                    expandBtns.forEach(btn => {
+                        if (btn.innerHTML && (btn.innerHTML.includes('Expand') || btn.innerHTML.includes('fa-expand'))) {
+                            btn.style.display = 'inline-flex';
+                            btn.style.visibility = 'visible';
+                            btn.style.opacity = '1';
+                            // Override any conflicting styles
+                            btn.style.setProperty('display', 'inline-flex', 'important');
+                        }
+                    });
+                }, 100);
+            } else {
+                document.body.classList.remove('mobile-active');
+            }
+        }
+        
+        // Initial sync
+        syncMobileFeatures();
+        
+        // Sync on resize and orientation change
+        window.addEventListener('resize', syncMobileFeatures, { passive: true });
+        window.addEventListener('orientationchange', syncMobileFeatures);
+        
+        // Additional sync after DOM changes (for dynamically loaded content)
+        if (window.MutationObserver) {
+            const observer = new MutationObserver(() => {
+                syncMobileFeatures();
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
     }
     
     // Initialize when DOM is ready

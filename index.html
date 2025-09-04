@@ -70,6 +70,22 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/platformPreloader.js"></script>
+    <script>
+        // Global Mobile Width Utility - Ensures consistent breakpoint across all components
+        window.isMobileWidth = function() {
+            return window.matchMedia('(max-width: 700px)').matches;
+        };
+        
+        // Enhanced touch device detection
+        window.isTouchDevice = function() {
+            return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        };
+        
+        // Combined mobile check (width OR touch device)
+        window.isMobileDevice = function() {
+            return window.isMobileWidth() || window.isTouchDevice();
+        };
+    </script>
     <style>
         :root {
             --primary: #2c3e50;
@@ -1659,6 +1675,69 @@
         /* COMPREHENSIVE CROSS-BROWSER & CROSS-DEVICE COMPATIBILITY ENHANCEMENTS */
         /* ====================================================================================== */
         
+        /* CRITICAL: Standardized Mobile Breakpoint for JavaScript-CSS Synchronization */
+        /* This ensures expand buttons and responsive features work consistently across all devices */
+        @media (max-width: 700px) {
+            /* Force expand button visibility for all simulators */
+            .btn-info[style*="display: none"] {
+                display: inline-flex !important;
+            }
+            
+            /* Ensure all interactive elements are touch-optimized */
+            button, .btn, .input-switch, .k-map-input {
+                min-height: 48px !important;
+                min-width: 48px !important;
+                touch-action: manipulation;
+            }
+            
+            /* Enhanced cursor indicators for mobile */
+            .image-frame img, .responsive-img {
+                cursor: zoom-in !important;
+            }
+            
+            /* Mobile-specific simulator adjustments */
+            .simulator {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+        }
+        
+        /* Enhanced Mobile State Management */
+        body.mobile-active .btn-info {
+            /* Ensure expand buttons are always visible on mobile */
+            display: inline-flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        body.mobile-active .btn-info[style*="display: none"] {
+            /* Override any inline styles that hide expand buttons */
+            display: inline-flex !important;
+        }
+        
+        /* Touch device optimizations */
+        body.touch-device .btn, 
+        body.touch-device button {
+            min-height: 48px;
+            min-width: 48px;
+            padding: 0.75rem 1rem;
+        }
+        
+        /* Enhanced mobile responsive system */
+        @media (max-width: 700px) {
+            /* Ensure consistent mobile behavior */
+            body {
+                --mobile-touch-size: 48px;
+            }
+            
+            /* All expand buttons must be visible */
+            .btn-info {
+                display: inline-flex !important;
+                min-height: var(--mobile-touch-size) !important;
+                min-width: var(--mobile-touch-size) !important;
+            }
+        }
+        
         /* 1. Universal Touch and Interaction Optimization */
         button, .btn, .input-switch, .k-map-input, .gate-btn, .control-btn {
             -webkit-user-select: none;
@@ -1783,6 +1862,15 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
             box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
+        }
+        
+        /* Exception: Help and Theme toggle buttons maintain clean styling */
+        /* These buttons have custom focus/hover effects and don't need the standard outline */
+        .help-toggle-btn:focus, .theme-toggle-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            /* Override any global focus rules */
+            border: none !important;
         }
         
         /* 8. Enhanced Touch Device Optimizations */
@@ -3117,7 +3205,9 @@
         }
         
         .help-toggle-btn:hover, .help-toggle-btn:focus {
-            outline: none;
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
         }
         .theme-toggle-icon,
         .help-toggle-icon {

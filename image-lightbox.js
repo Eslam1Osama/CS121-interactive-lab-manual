@@ -24,11 +24,13 @@
     ]);
 
     function isMobileWidth() {
-        return window.matchMedia('(max-width: 700px)').matches;
+        // Use global function if available, fallback to local implementation
+        return window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
     }
     
     function isTouchDevice() {
-        return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        // Use global function if available, fallback to local implementation
+        return window.isTouchDevice ? window.isTouchDevice() : ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
     }
 
     function createLightbox() {
