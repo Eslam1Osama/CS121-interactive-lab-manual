@@ -1,0 +1,22 @@
+"Metric","Value"
+"Total Test Cases",100
+
+"Distribution by Module/Scenario","Count"
+"UI/UX & Responsiveness",12
+"Functionality (Interactions/Modules)",19
+"Accessibility",12
+"Performance & Caching",8
+"Cross-Browser",4
+"Security (Static)",8
+"SEO & Metadata",10
+"Analytics & Monitoring",2
+"Error Handling",4
+"Content Validation",6
+"PWA & Media & Misc.",15
+
+"Recommended Regression Suite (Critical Smoke)","Test IDs"
+"Core Smoke","UI-001, RESP-010, RESP-012, FUNC-013, FUNC-015, FUNC-016, FUNC-021, FUNC-024, FUNC-025, FUNC-031, PERF-043, SEC-050, SEC-051, SEO-056, SEO-057, ERR-065, BUILD-096"
+
+"Notes","Focus on K-Map, Lab11 counter, SW offline flow, and asset integrity for each deploy."
+
+
