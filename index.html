@@ -1655,6 +1655,263 @@
             }
         }
         
+        /* ====================================================================================== */
+        /* COMPREHENSIVE CROSS-BROWSER & CROSS-DEVICE COMPATIBILITY ENHANCEMENTS */
+        /* ====================================================================================== */
+        
+        /* 1. Universal Touch and Interaction Optimization */
+        button, .btn, .input-switch, .k-map-input, .gate-btn, .control-btn {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            /* Ensure minimum touch target size (44px) for accessibility */
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* 2. Enhanced Image Cross-Browser Support */
+        img, .responsive-img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            /* Prevent image selection on touch devices */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Enhanced image rendering */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        /* 3. Universal Scrollbar Styling */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) var(--card-bg);
+        }
+        
+        *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        *::-webkit-scrollbar-track {
+            background: var(--card-bg);
+            border-radius: 4px;
+        }
+        
+        *::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+            border: 1px solid var(--card-bg);
+        }
+        
+        *::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* 4. Enhanced Modal System Cross-Browser Support */
+        .modal-overlay {
+            /* Prevent iOS Safari bounce scrolling */
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            /* Enhanced backdrop blur support */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        
+        /* 5. Progressive Web App Enhancements */
+        @supports (display: standalone) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            header {
+                padding-top: calc(0.6rem + env(safe-area-inset-top));
+            }
+        }
+        
+        /* 6. iOS Safari Specific Fixes */
+        @supports (-webkit-touch-callout: none) {
+            .modal-overlay {
+                /* Fix iOS Safari modal positioning */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                height: -webkit-fill-available;
+            }
+            
+            /* Prevent iOS Safari zoom on input focus */
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+        
+        /* 7. Enhanced Accessibility Features */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--accent);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Enhanced keyboard navigation */
+        .k-map-input:focus {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+            z-index: 10;
+        }
+        
+        /* Enhanced button focus states */
+        .btn:focus, button:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
+        }
+        
+        /* 8. Enhanced Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Optimize for touch devices */
+            .btn, button {
+                min-height: 48px;
+                min-width: 48px;
+                padding: 0.75rem 1rem;
+            }
+            
+            /* Hide tooltips on touch devices or show on long press */
+            .sim-tooltip {
+                display: none;
+            }
+            
+            /* Enhanced touch feedback */
+            .btn:active, button:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+        }
+        
+        /* 9. High DPI Display Support */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .btn, button {
+                border-width: 0.5px;
+            }
+            
+            .modal-container {
+                border-width: 0.5px;
+            }
+            
+            img, .responsive-img {
+                image-rendering: -webkit-optimize-contrast;
+            }
+        }
+        
+        /* 10. Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .modal-container {
+                animation: none !important;
+            }
+        }
+        
+        /* 11. Enhanced Mobile Breakpoint System */
+        @media (max-width: 1024px) {
+            /* Large tablets optimization */
+            .btn, button {
+                min-height: 48px;
+                min-width: 48px;
+                padding: 0.75rem 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Enhanced mobile optimization */
+            .btn, button {
+                min-height: 44px;
+                min-width: 44px;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            /* Ultra-compact mobile optimization */
+            .btn, button {
+                min-height: 40px;
+                min-width: 40px;
+                font-size: 0.85rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+        
+        /* 12. Enhanced Modal Animation System */
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-container {
+            animation: modalSlideIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* 13. Enhanced Device Orientation Support */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .modal-overlay {
+                padding: 0.25rem;
+            }
+            
+            .modal-container {
+                max-height: 96vh;
+                border-radius: 8px;
+            }
+            
+            .modal-header {
+                padding: 0.75rem 1rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+            
+            .modal-footer {
+                padding: 0.75rem 1rem;
+            }
+        }
+        
+        /* ====================================================================================== */
+        /* END COMPREHENSIVE COMPATIBILITY ENHANCEMENTS */
+        /* ====================================================================================== */
+        
         /* BCD to Excess-3 Simulator Horizontal Layout Styles - Enhanced to match Lab 1 responsive pattern */
         /* Note: Outer simulator-container removed, inner bcd-excess3-sim-card expanded to full width */
         .bcd-excess3-sim-card {
