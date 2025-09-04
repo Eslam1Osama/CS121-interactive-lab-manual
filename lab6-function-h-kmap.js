@@ -16,7 +16,7 @@
  * - Identical UI/UX to existing K-Map implementation
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+function initLab6FunctionHKMap() {
     // K-Map Elements
     const kMap = document.getElementById('k-map-lab6-function-h');
     const kMapInputs = kMap.querySelectorAll('.k-map-input');
@@ -548,4 +548,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validate configurations on load
     validateKMap() && validateSimpleEditor();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLab6FunctionHKMap);
+} else {
+    initLab6FunctionHKMap();
+}

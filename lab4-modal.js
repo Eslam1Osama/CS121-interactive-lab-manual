@@ -13,7 +13,8 @@
  */
 
 // Rich Editor and Modal Functionality for Lab 4
-document.addEventListener('DOMContentLoaded', function() {
+(function(){
+function initLab4Modal(){
     // Rich Editor Functionality
     let editor = document.getElementById('simplification-editor-lab4');
     let toolbar = document.querySelector('#lab4 .editor-toolbar');
@@ -237,4 +238,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+}
+
+if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initLab4Modal);
+} else {
+    initLab4Modal();
+}
+})();

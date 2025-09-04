@@ -185,11 +185,17 @@
         setupCodeSplitting: function() {
             // Initialize code splitting for lab-specific scripts
             this.labScripts = {
-                'lab3': 'lab3-modal.js',
-                'lab4': 'lab4-modal.js',
-                'lab5': 'lab5-modal.js',
+                'lab1': ['image-lightbox.js', 'lab1-simulator-modal.js'],
+                'lab2': 'lab2-simulator-modal.js',
+                'lab3': ['lab3-modal.js', 'lab3-simulator-modal.js'],
+                'lab4': ['lab4-modal.js'],
+                'lab5': ['lab5-modal.js'],
                 'lab6': ['lab6-kmap.js', 'lab6-simplification.js', 'lab6-function-h-kmap.js'],
-                'lab11': 'lab11-modal.js'
+                'lab7': ['image-lightbox.js', 'simulator-expand.js', 'lab7-simulator-expand.js'],
+                'lab8': ['image-lightbox.js', 'simulator-expand.js', 'lab8-simulator-expand.js'],
+                'lab9': ['image-lightbox.js', 'simulator-expand.js', 'lab9-simulator-expand.js'],
+                'lab10': ['image-lightbox.js', 'simulator-expand.js', 'lab10-simulator-expand.js', 'lab10-responsive.js'],
+                'lab11': ['image-lightbox.js', 'simulator-expand.js', 'lab11-simulator-expand.js', 'lab11-modal.js', 'lab11-responsive.js']
             };
             
             this.loadedScripts = new Set();

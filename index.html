@@ -1072,10 +1072,15 @@
             backdrop-filter: blur(4px);
             z-index: 1000;
             display: none;
+            /* Enhanced centering using flexbox */
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
         }
         
         .modal-overlay.show {
-            display: block;
+            display: flex !important;
         }
         
         /* Enhanced Chip Modal Overlay for Lab 7 */
@@ -1089,18 +1094,21 @@
             backdrop-filter: blur(4px);
             z-index: 9999;
             display: none;
+            /* Enhanced centering using flexbox */
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
         }
         
         .chip-modal-overlay.show {
-            display: block;
+            display: flex !important;
         }
         
         /* Enhanced Chip Modal Container for Lab 7 */
         .chip-modal-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* Remove fixed positioning and transform - let flexbox handle centering */
+            position: relative;
             max-width: 1200px;
             width: 95%;
             max-height: 95vh;
@@ -1109,6 +1117,8 @@
             background: var(--card-bg);
             border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            /* Fallback centering for older browsers */
+            margin: auto;
         }
         
         .modal-container {
@@ -1122,6 +1132,9 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            /* Enhanced centering and responsiveness */
+            margin: auto;
+            align-self: center;
         }
         
         .modal-header {
@@ -1425,11 +1438,15 @@
         
         /* Comprehensive Responsive Design for Chip Modal */
         @media (max-width: 768px) {
+            .chip-modal-overlay {
+                padding: 0.5rem;
+            }
+            
             .chip-modal-container {
                 width: 98%;
                 max-height: 95vh;
-                margin: 1rem;
                 max-width: 95vw;
+                /* Remove margin since flexbox handles centering */
             }
             
             .chip-modal-container .modal-header {
@@ -1466,11 +1483,15 @@
         }
         
         @media (max-width: 480px) {
+            .chip-modal-overlay {
+                padding: 0.5rem;
+            }
+            
             .chip-modal-container {
                 width: 100%;
-                margin: 0.5rem;
                 max-height: 98vh;
                 max-width: 98vw;
+                /* Remove margin since flexbox handles centering */
             }
             
             .chip-modal-container .modal-header {
@@ -1507,10 +1528,14 @@
         
         /* Extra small devices */
         @media (max-width: 360px) {
+            .chip-modal-overlay {
+                padding: 0.25rem;
+            }
+            
             .chip-modal-container {
                 width: 100%;
-                margin: 0.25rem;
                 max-height: 99vh;
+                /* Remove margin since flexbox handles centering */
             }
             
             .chip-modal-container .modal-header h3 {
@@ -1527,11 +1552,88 @@
             }
         }
         
+        /* Enhanced responsive modal centering for Lab 3 and all modals */
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 0.5rem;
+            }
+            
+            .modal-container {
+                width: 98%;
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            
+            .answer-comparison {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-overlay {
+                padding: 0.5rem;
+            }
+            
+            .modal-container {
+                width: 98%;
+                max-width: 98vw;
+                max-height: 95vh;
+            }
+            
+            .modal-header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-footer {
+                padding: 1rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .modal-overlay {
+                padding: 0.25rem;
+            }
+            
+            .modal-container {
+                width: 100%;
+                max-width: 100vw;
+                max-height: 98vh;
+            }
+            
+            .modal-header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+            
+            .modal-footer {
+                padding: 0.8rem 1rem;
+            }
+            
+            .modal-header h3 {
+                font-size: 1.1rem;
+            }
+        }
+        
         /* Landscape orientation support for mobile */
         @media (max-height: 500px) and (orientation: landscape) {
+            .modal-overlay {
+                padding: 0.5rem;
+            }
+            
+            .modal-container {
+                max-height: 98vh;
+            }
+            
             .chip-modal-container {
                 max-height: 98vh;
-                top: 45%;
             }
             
             .chip-modal-container .modal-header {
@@ -1616,6 +1718,8 @@
             max-width: 300px;
             margin-left: auto;
             margin-right: auto;
+            /* Center the inner text content as well */
+            text-align: center;
         }
         
         .bcd-conversion-logic {
@@ -1769,11 +1873,13 @@
             }
             
             .bcd-switch-row {
-                gap: 1.1rem;
+                /* compact spacing ensures all 4 inputs fit within the card */
+                gap: 0.9rem;
             }
             
             .bcd-excess3-led-row {
-                gap: 1.8rem;
+                /* compact spacing ensures all 5 LEDs fit within the card */
+                gap: 1.0rem;
                 margin: 0.8rem 0;
             }
             
@@ -1782,7 +1888,7 @@
             }
             
             .bcd-seg-container {
-                gap: 1.5rem;
+                gap: 1.2rem;
             }
             
             .segment-display svg {
@@ -1791,8 +1897,8 @@
             }
             
             .lab7-led {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
                 margin: 8px auto 0;
             }
             
@@ -1822,22 +1928,20 @@
                 font-size: 1.2rem;
             }
             
-            .bcd-switch-row {
-                gap: 0.8rem;
-            }
+            .bcd-switch-row { gap: 0.7rem; }
+            /* Size down toggles just for lab 7 to prevent overflow while staying tappable */
+            #lab7 .bcd-switch-block { min-width: 48px; }
+            #lab7 .bcd-switch-block .input-switch { width: 50px; height: 24px; }
+            #lab7 .bcd-switch-block .slider:before { width: 20px; height: 20px; top: 2px; left: 2px; }
+            #lab7 .bcd-switch-block input:checked + .slider:before { transform: translateX(26px); }
             
-            .bcd-excess3-led-row {
-                gap: 0.6rem;
-                margin: 0.6rem 0;
-            }
+            .bcd-excess3-led-row { gap: 0.9rem; margin: 0.6rem 0; }
             
             .bcd-excess3-led-block {
                 min-width: 45px;
             }
             
-            .bcd-seg-container {
-                gap: 1.2rem;
-            }
+            .bcd-seg-container { gap: 1rem; }
             
             .input-switch {
                 width: 48px;
@@ -1858,11 +1962,7 @@
                 height: 100px;
             }
             
-            .lab7-led {
-                width: 28px;
-                height: 28px;
-                margin: 6px auto 0;
-            }
+            .lab7-led { width: 28px; height: 28px; margin: 6px auto 0; }
             
             .led-label {
                 font-size: 0.75rem;
@@ -1870,10 +1970,7 @@
             }
             
             .bcd-values-display,
-            .excess3-values-display-centered {
-                max-width: 260px;
-                padding: 0.7rem;
-            }
+            .excess3-values-display-centered { max-width: 260px; padding: 0.7rem; }
         }
         
         /* Extra small mobile breakpoint for ultra-compact layout */
@@ -1890,24 +1987,19 @@
                 font-size: 1.1rem;
             }
             
-            .bcd-switch-row {
-                gap: 0.6rem;
-            }
+            .bcd-switch-row { gap: 0.6rem; }
+            #lab7 .bcd-switch-block { min-width: 44px; }
+            #lab7 .bcd-switch-block .input-switch { width: 46px; height: 22px; }
+            #lab7 .bcd-switch-block .slider:before { width: 18px; height: 18px; top: 2px; left: 2px; }
+            #lab7 .bcd-switch-block input:checked + .slider:before { transform: translateX(24px); }
             
-            .bcd-excess3-led-row {
-                gap: 0.5rem;
-                margin: 0.5rem 0;
-            }
+            .bcd-excess3-led-row { gap: 0.7rem; margin: 0.5rem 0; }
             
             .bcd-excess3-led-block {
                 min-width: 40px;
             }
             
-            .lab7-led {
-                width: 26px;
-                height: 26px;
-                margin: 5px auto 0;
-            }
+            .lab7-led { width: 26px; height: 26px; margin: 5px auto 0; }
             
             .led-label {
                 font-size: 0.7rem;
@@ -2687,6 +2779,10 @@
             }
             header {
                 padding: 0.4rem 0.2rem 0.4rem 0.2rem;
+                /* Reserve space for help/theme buttons on the right to prevent overlap with title on small screens */
+                padding-right: 6.5rem;
+                /* Reserve symmetric space on the left for the hamburger button to keep title visually centered */
+                padding-left: 6.5rem;
             }
             .container {
                 padding-top: 4.2rem;
@@ -2789,12 +2885,12 @@
         
         .help-toggle-btn:hover .help-toggle-icon,
         .help-toggle-btn:focus .help-toggle-icon {
-            color: var(--accent);
-            /* Enhanced white frame on hover for better visibility */
+            /* Neutralize hover effect: match base non-hover appearance */
+            color: var(--success);
             text-shadow: 
-                0 0 3px rgba(255, 255, 255, 0.9),
-                0 0 6px rgba(255, 255, 255, 0.7),
-                0 0 9px rgba(255, 255, 255, 0.5);
+                0 0 2px rgba(255, 255, 255, 0.8),
+                0 0 4px rgba(255, 255, 255, 0.6),
+                0 0 6px rgba(255, 255, 0.4);
         }
         
         /* Light mode adjustments for help toggle icon */
@@ -2806,9 +2902,10 @@
         
         body.light-mode .help-toggle-btn:hover .help-toggle-icon,
         body.light-mode .help-toggle-btn:focus .help-toggle-icon {
+            /* Neutralize hover effect in light mode as well */
             text-shadow: 
-                0 0 3px rgba(0, 0, 0, 0.4),
-                0 0 6px rgba(0, 0, 0, 0.3);
+                0 0 2px rgba(0, 0, 0, 0.3),
+                0 0 4px rgba(0, 0, 0, 0.2);
         }
         
         @media (prefers-reduced-motion: reduce) {
@@ -2877,6 +2974,11 @@
           right: auto;
           margin: 0;
           /* Remove inline animation, use .open for animation */
+          /* Make dropdown usable on small-height screens */
+          max-height: calc(100vh - 6rem);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
         }
         .toc-dropdown.open {
           opacity: 1;
@@ -2890,6 +2992,9 @@
             padding: 1.2rem 0.5rem 1rem 0.5rem;
             left: 1vw;
             top: 4.5rem;
+            /* Constrain height and enable vertical scrolling on small devices */
+            max-height: calc(100vh - 5rem);
+            overflow-y: auto;
           }
           
           .help-toggle-btn {
@@ -2901,6 +3006,13 @@
             top: 4.5rem;
             min-width: 180px;
             max-width: calc(100vw - 2rem);
+          }
+        }
+        /* Tablet optimization for dropdown height */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .toc-dropdown {
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
           }
         }
         html.no-scroll, body.no-scroll {
@@ -3226,6 +3338,45 @@
             .lab1-seg-labels {
                 gap: 1.1rem;
             }
+        }
+        /* Lab 1: tighter horizontal spacing and smaller controls on narrow phones
+           Keep horizontal layout; ensure all controls remain inside container */
+        @media (max-width: 600px) {
+            .lab1-switch-row, .lab1-led-row { gap: 0.8rem; }
+            .lab1-switch-block, .lab1-led-block { min-width: 50px; }
+            .lab1-switch-block .input-switch { width: 52px; height: 26px; }
+            .lab1-switch-block .slider:before { width: 22px; height: 22px; top: 2px; left: 3px; }
+            .lab1-switch-block input:checked + .slider:before { transform: translateX(26px); }
+            .lab1-led-block .led-output { width: 30px; height: 30px; }
+        }
+        @media (max-width: 360px) {
+            .lab1-switch-row, .lab1-led-row { gap: 0.5rem; }
+            .lab1-switch-block, .lab1-led-block { min-width: 46px; }
+            .lab1-switch-block .input-switch { width: 46px; height: 24px; }
+            .lab1-switch-block .slider:before { width: 20px; height: 20px; top: 2px; left: 2px; }
+            .lab1-switch-block input:checked + .slider:before { transform: translateX(22px); }
+            .lab1-led-block .led-output { width: 26px; height: 26px; }
+        }
+
+        /* Lab 2: Fix LED aspect ratio and refine gaps for small screens */
+        #lab2 .led-output {
+            /* Prevent flex-based distortion and enforce a perfect circle */
+            flex: 0 0 auto;
+            width: 36px;
+            height: 36px;
+            aspect-ratio: 1 / 1;
+            display: inline-block;
+        }
+        @media (max-width: 768px) {
+            /* Override inline gaps for better compactness on tablets */
+            #lab2 .simulator { gap: 1.5rem !important; }
+            #lab2 .input-container { gap: 1.25rem !important; }
+        }
+        @media (max-width: 480px) {
+            /* Further tighten on phones while preserving clarity */
+            #lab2 .simulator { gap: 1rem !important; }
+            #lab2 .input-container { gap: 1rem !important; }
+            #lab2 .output-container { min-width: 100px; }
         }
         .lab1-sim-divider {
             width: 100%;
@@ -8278,6 +8429,24 @@
     </style>
 </head>
 <body>
+    <script>
+        // Apply initial theme immediately to prevent dark-to-light flash on first paint
+        (function(){
+            try {
+                var saved = localStorage.getItem('cs121-theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var useLight = saved ? (saved === 'light') : !prefersDark;
+                if (useLight) {
+                    document.body.classList.add('light-mode');
+                } else {
+                    document.body.classList.remove('light-mode');
+                }
+                // Sync browser theme color early for seamless address bar color
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', useLight ? '#1976d2' : '#3498db');
+            } catch (_) { /* no-op */ }
+        })();
+    </script>
     <header>
         <button type="button" class="sidebar-hamburger hamburger-button" aria-label="Open Table of Contents" id="sidebarHamburger" style="position:absolute;top:1.5rem;left:2rem;z-index:21;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(52,152,219,0.15);box-shadow:0 2px 8px rgba(52,152,219,0.10);transition:background 0.3s,box-shadow 0.3s,transform 0.2s;outline:none;"><span id="hamburgerIcon"><i class="fas fa-bars" style="font-size:1.5rem;color:#3498db;"></i></span></button>
         <div class="university">MSA University</div>
@@ -8681,14 +8850,14 @@
                                     <input type="checkbox" id="simInputA" aria-label="Input A">
                                     <label class="slider" for="simInputA"></label>
                                 </div>
-                                <div class="input-label">Input A</div>
+                                <div class="input-label">Input A (MSB)</div>
                             </div>
                             <div>
                                 <div class="input-switch">
                                     <input type="checkbox" id="simInputB" aria-label="Input B">
                                     <label class="slider" for="simInputB"></label>
                                 </div>
-                                <div class="input-label">Input B</div>
+                                <div class="input-label">Input B (LSB)</div>
                             </div>
                         </div>
                         <div class="output-container" style="display:flex;flex-direction:column;align-items:center;gap:0.7rem;min-width:120px;">
@@ -8923,7 +9092,7 @@
                                     <input type="checkbox" id="boolSimInputX" aria-label="Input X">
                                     <label class="slider" for="boolSimInputX"></label>
                                 </div>
-                                <div class="input-label">input X</div>
+                                <div class="input-label">input X (MSB)</div>
                             </div>
                             <div class="input-switch-block">
                                 <div class="input-switch">
@@ -8937,7 +9106,7 @@
                                     <input type="checkbox" id="boolSimInputZ" aria-label="Input Z">
                                     <label class="slider" for="boolSimInputZ"></label>
                                 </div>
-                                <div class="input-label">input Z</div>
+                                <div class="input-label">input Z (LSB)</div>
                             </div>
                         </div>
                         <div class="boolean-sim-equation">
@@ -9302,7 +9471,7 @@
                                     <input type="checkbox" id="boolSimInputALab4" aria-label="Input A">
                                     <label class="slider" for="boolSimInputALab4"></label>
                                 </div>
-                                <div class="input-label">Input A</div>
+                                <div class="input-label">Input A (MSB)</div>
                             </div>
                             <div class="input-switch-block">
                                 <div class="input-switch">
@@ -9323,7 +9492,7 @@
                                     <input type="checkbox" id="boolSimInputDLab4" aria-label="Input D">
                                     <label class="slider" for="boolSimInputDLab4"></label>
                                 </div>
-                                <div class="input-label">Input D</div>
+                                <div class="input-label">Input D (LSB)</div>
                             </div>
                         </div>
                         <div class="boolean-sim-equation">
@@ -9907,7 +10076,7 @@
                                     <input type="checkbox" id="boolSimInputALab5" aria-label="Input A">
                                     <label class="slider" for="boolSimInputALab5"></label>
                                 </div>
-                                <div class="input-label">Input A</div>
+                                <div class="input-label">Input A (MSB)</div>
                             </div>
                             <div class="input-switch-block">
                                 <div class="input-switch">
@@ -9928,7 +10097,7 @@
                                     <input type="checkbox" id="boolSimInputDLab5" aria-label="Input D">
                                     <label class="slider" for="boolSimInputDLab5"></label>
                                 </div>
-                                <div class="input-label">Input D</div>
+                                <div class="input-label">Input D (LSB)</div>
                             </div>
                         </div>
                         <div class="boolean-sim-equation">
@@ -12393,8 +12562,8 @@
                         </div>
                         
                         <div class="gate-display">
-                            <div>8×1 Multiplexer Data Inputs</div>
-                            <div style="font-size: 0.9rem; margin-top: 10px; line-height: 1.4;">
+                            <div style="text-align: center;">8×1 Multiplexer Data Inputs</div>
+                            <div style="font-size: 0.9rem; margin-top: 10px; line-height: 1.4; text-align: center;">
                                 D0: <span id="muxD0">0</span> | D1: <span id="muxD1">0</span> | D2: <span id="muxD2">0</span> | D3: <span id="muxD3">0</span><br>
                                 D4: <span id="muxD4">0</span> | D5: <span id="muxD5">0</span> | D6: <span id="muxD6">0</span> | D7: <span id="muxD7">0</span>
                             </div>
@@ -14592,14 +14761,7 @@
                             </div>
                         </div>
                         
-                                <!-- Counter Values Display -->
-                                <div class="counter-values-display" style="text-align: center; background: var(--bg-primary); padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border);">
-                                    <div style="font-size: 0.85rem; color: var(--light); margin-bottom: 0.4rem;">Counter Values:</div>
-                                    <div style="font-size: 1rem; color: var(--text); font-weight: 500;">
-                                        Binary: <span id="counterBinaryValue" style="color: var(--accent);">000</span><br>
-                                        Decimal: <span id="counterDecimalValue" style="color: var(--accent);">0</span>
-                                    </div>
-                            </div>
+                                
                         </div>
                     </div>
                         
@@ -14635,19 +14797,26 @@
                             <div class="counter-led-section" style="background: var(--bg-secondary); padding: 1rem; border-radius: 10px; border: 1px solid var(--border);">
                                 <h4 style="margin-bottom: 0.8rem; color: var(--secondary); text-align: center; font-size: 1rem;">Binary State LEDs</h4>
                                 
+                                <div class="counter-values-display" style="text-align: center; background: var(--bg-primary); padding: 0.8rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 0.8rem;">
+                                    <div style="font-size: 0.85rem; color: var(--light); margin-bottom: 0.4rem;">Counter Values:</div>
+                                    <div style="font-size: 1rem; color: var(--text); font-weight: 500;">
+                                        Binary: <span id="counterBinaryValue" style="color: var(--accent);">000</span><br>
+                                        Decimal: <span id="counterDecimalValue" style="color: var(--accent);">0</span>
+                                    </div>
+                                </div>
                                 <div class="counter-led-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
                                     <div class="counter-led-display" style="text-align: center;">
-                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">A (MSB)</div>
+                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">O3 (MSB)</div>
                                         <div class="led-output" id="counterALed" role="img" aria-label="Counter State A LED" tabindex="0" style="margin: 0 auto 0.4rem auto;"></div>
                                         <div class="input-label" style="font-size: 0.85rem;">State: <span id="counterAState">0 (LOW)</span></div>
                             </div>
                                     <div class="counter-led-display" style="text-align: center;">
-                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">B</div>
+                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">O2</div>
                                         <div class="led-output" id="counterBLed" role="img" aria-label="Counter State B LED" tabindex="0" style="margin: 0 auto 0.4rem auto;"></div>
                                         <div class="input-label" style="font-size: 0.85rem;">State: <span id="counterBState">0 (LOW)</span></div>
                             </div>
                                     <div class="counter-led-display" style="text-align: center;">
-                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">C (LSB)</div>
+                                        <div class="input-label" style="font-size: 0.9rem; margin-bottom: 0.4rem;">O1 (LSB)</div>
                                         <div class="led-output" id="counterCLed" role="img" aria-label="Counter State C LED" tabindex="0" style="margin: 0 auto 0.4rem auto;"></div>
                                         <div class="input-label" style="font-size: 0.85rem;">State: <span id="counterCState">0 (LOW)</span></div>
                                     </div>
@@ -17883,6 +18052,24 @@
                 window.scrollTo({ top: sectionTop, behavior: 'smooth' });
             });
         });
+        // Dynamically size the TOC dropdown so vertical scrollbar only appears when needed
+        function updateTocDropdownMaxHeight() {
+            if (!tocDropdown) return;
+            // Ensure element is measurable
+            const rect = tocDropdown.getBoundingClientRect();
+            const top = rect.top > 0 ? rect.top : 72; // fallback to header height
+            const available = Math.max(120, window.innerHeight - top - 24);
+            tocDropdown.style.maxHeight = available + 'px';
+            // Show scrollbar only if content exceeds available height
+            if (tocDropdown.scrollHeight > available) {
+                tocDropdown.style.overflowY = 'auto';
+            } else {
+                tocDropdown.style.overflowY = 'visible';
+            }
+        }
+
+        let _tocResizeHandler;
+
         function openTocDropdown() {
             tocDropdown.style.display = 'block';
             setTimeout(() => tocDropdown.classList.add('open'), 10);
@@ -17891,12 +18078,28 @@
             tocDropdown.setAttribute('aria-modal', 'true');
             tocDropdown.setAttribute('tabindex', '-1');
             tocDropdown.focus();
+            // After opening, compute dynamic max-height and overflow
+            updateTocDropdownMaxHeight();
+            // Attach resize/orientation handlers while open
+            _tocResizeHandler = function() {
+                if (isDropdownOpen()) updateTocDropdownMaxHeight();
+            };
+            window.addEventListener('resize', _tocResizeHandler, { passive: true });
+            window.addEventListener('orientationchange', _tocResizeHandler);
         }
         function closeTocDropdown() {
             tocDropdown.classList.remove('open');
             setTimeout(() => {
                 tocDropdown.style.display = 'none';
                 // Remove scroll lock and body position manipulation
+                // Cleanup styles and listeners
+                tocDropdown.style.maxHeight = '';
+                tocDropdown.style.overflowY = '';
+                if (_tocResizeHandler) {
+                    window.removeEventListener('resize', _tocResizeHandler);
+                    window.removeEventListener('orientationchange', _tocResizeHandler);
+                    _tocResizeHandler = null;
+                }
             }, 300);
         }
         
@@ -19738,6 +19941,14 @@
                             
                             // Load scripts for this lab
                             scriptLoader.loadLabScripts(labId);
+                            // Ensure simulator expand utilities are loaded when needed
+                            if (labId === 'lab4') {
+                                scriptLoader.loadScript('simulator-expand.js').then(() => scriptLoader.loadScript('lab4-simulator-expand.js'));
+                            } else if (labId === 'lab5') {
+                                scriptLoader.loadScript('simulator-expand.js').then(() => scriptLoader.loadScript('lab5-simulator-expand.js'));
+                            } else if (labId === 'lab6') {
+                                scriptLoader.loadScript('simulator-expand.js').then(() => scriptLoader.loadScript('lab6-simulator-expand.js'));
+                            }
                             
                             // Mark as loaded
                             labSection.classList.add('scripts-loaded');
@@ -19977,6 +20188,9 @@
                 }
             }
             
+            let repositionDropdown = null;
+            let dropdownFixedWidth = null;
+
             function showDropdown() {
                 dropdown.classList.add('show');
                 if ('inert' in HTMLElement.prototype) {
@@ -19986,6 +20200,71 @@
                     dropdown.removeAttribute('tabindex');
                 }
                 helpToggle.setAttribute('aria-expanded', 'true');
+
+                // Position dropdown relative to the toggle button and keep it visible when scrolled
+                // Lock width to content so it doesn't stretch with viewport
+                if (!dropdownFixedWidth) {
+                    const prevWidth = dropdown.style.width;
+                    const prevDisplay = dropdown.style.display;
+                    const prevWhiteSpace = dropdown.style.whiteSpace;
+                    const prevPosition = dropdown.style.position;
+
+                    // Temporarily set container to natural sizing
+                    dropdown.style.width = 'auto';
+                    dropdown.style.display = 'inline-block';
+                    dropdown.style.whiteSpace = 'nowrap';
+                    dropdown.style.position = 'absolute';
+                    dropdown.style.visibility = 'hidden';
+                    document.body.appendChild(dropdown);
+
+                    // Compute max child width
+                    const items = dropdown.querySelectorAll('.dropdown-item');
+                    let maxItemWidth = 0;
+                    items.forEach(item => {
+                        const prevItemWidth = item.style.width;
+                        const prevItemDisplay = item.style.display;
+                        item.style.width = 'auto';
+                        item.style.display = 'inline-block';
+                        const rect = item.getBoundingClientRect();
+                        maxItemWidth = Math.max(maxItemWidth, Math.ceil(rect.width));
+                        item.style.width = prevItemWidth;
+                        item.style.display = prevItemDisplay;
+                    });
+
+                    // Include container paddings
+                    const cs = window.getComputedStyle(dropdown);
+                    const paddingX = parseFloat(cs.paddingLeft || '0') + parseFloat(cs.paddingRight || '0');
+                    const measured = maxItemWidth + paddingX;
+                    const clamped = Math.max(220, Math.min(measured, 360));
+                    dropdownFixedWidth = clamped;
+
+                    // Restore container styles and apply fixed width
+                    dropdown.style.width = clamped + 'px';
+                    dropdown.style.display = prevDisplay || '';
+                    dropdown.style.whiteSpace = prevWhiteSpace || '';
+                    dropdown.style.position = prevPosition || '';
+                    dropdown.style.visibility = '';
+                }
+
+                const place = () => {
+                    const rect = helpToggle.getBoundingClientRect();
+                    const viewportWidth = window.innerWidth;
+                    const dropdownWidth = dropdownFixedWidth || dropdown.offsetWidth;
+                    dropdown.style.position = 'fixed';
+                    dropdown.style.top = Math.round(rect.bottom + 8) + 'px';
+                    // Align left with toggle; if it would overflow right, align right edge with toggle's right edge
+                    let left = Math.round(rect.left);
+                    if (left + dropdownWidth + 8 > viewportWidth) {
+                        left = Math.round(rect.right - dropdownWidth);
+                    }
+                    left = Math.max(8, Math.min(left, viewportWidth - dropdownWidth - 8));
+                    dropdown.style.left = left + 'px';
+                    dropdown.style.zIndex = '1001';
+                };
+                place();
+                repositionDropdown = place;
+                window.addEventListener('scroll', repositionDropdown, { passive: true });
+                window.addEventListener('resize', repositionDropdown, { passive: true });
             }
             
             function hideDropdown() {
@@ -19997,6 +20276,15 @@
                     dropdown.setAttribute('tabindex', '-1');
                 }
                 helpToggle.setAttribute('aria-expanded', 'false');
+
+                // Cleanup scroll/resize listeners
+                if (repositionDropdown) {
+                    window.removeEventListener('scroll', repositionDropdown);
+                    window.removeEventListener('resize', repositionDropdown);
+                    repositionDropdown = null;
+                }
+
+                // Keep fixed width across hides to avoid flicker/reflow on close
             }
             
             // ========================

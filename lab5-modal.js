@@ -1,7 +1,7 @@
 // Lab 5 Modal Functionality for Minterm Expression Question
 // Handles rich text editor, modal display, and answer comparison
 
-document.addEventListener('DOMContentLoaded', function() {
+function initLab5Modal(){
     // Rich Text Editor Functionality
     const editor = document.getElementById('simplification-editor-lab5');
     const toolbar = document.querySelector('#lab5 .editor-toolbar');
@@ -280,4 +280,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.removeChild(textArea);
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLab5Modal);
+} else {
+    initLab5Modal();
+}

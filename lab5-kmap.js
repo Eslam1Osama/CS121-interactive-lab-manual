@@ -12,7 +12,7 @@
  * - Accessibility features
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+function initLab5KMap() {
     // K-Map Elements
     const kMapInputs = document.querySelectorAll('#k-map-lab5 .k-map-input');
     const fillKMapBtn = document.getElementById('fill-kmap-btn-lab5');
@@ -498,4 +498,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validate toolbar configuration on load
     validateToolbar();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLab5KMap);
+} else {
+    initLab5KMap();
+}

@@ -13,7 +13,8 @@
  */
 
 // Rich Editor and Modal Functionality for Lab 3
-document.addEventListener('DOMContentLoaded', function() {
+(function(){
+function initLab3Modal(){
     // Rich Editor Functionality
     let editor = document.getElementById('simplification-editor-lab3');
     let toolbar = document.querySelector('#lab3 .editor-toolbar');
@@ -276,4 +277,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+}
+
+if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initLab3Modal);
+} else {
+    initLab3Modal();
+}
+})();

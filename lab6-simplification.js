@@ -12,7 +12,7 @@
  * - Keyboard shortcuts for all formatting options
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+function initLab6Simplification(){
     // Editor Elements
     const editor = document.getElementById('simplification-editor-lab6');
     const toolbar = document.querySelector('#lab6 .editor-toolbar');
@@ -391,4 +391,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validate editor configuration on load
     validateEditor();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLab6Simplification);
+} else {
+    initLab6Simplification();
+}
