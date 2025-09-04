@@ -45,7 +45,7 @@
     <meta property="og:url" content="https://cs-121-interactive-lab-manual.vercel.app/">
     <meta property="og:title" content="CS121 Digital Logic Design - Interactive Lab Manual">
     <meta property="og:description" content="Comprehensive interactive lab manual for CS121 Digital Logic Design course. Features 11 complete lab experiments with interactive simulators, K-Map tools, and real-time circuit simulation.">
-    <meta property="og:image" content="https://cs-121-interactive-lab-manual.vercel.app//media/apple-touch-icon.png">
+    <meta property="og:image" content="https://cs-121-interactive-lab-manual.vercel.app/media/apple-touch-icon.png">
     <meta property="og:image:width" content="180">
     <meta property="og:image:height" content="180">
     <meta property="og:image:alt" content="CS121 Digital Logic Design Lab Manual">
@@ -18987,7 +18987,10 @@
                     // Show the modal
                     modal.setAttribute('aria-hidden', 'false');
                     modal.setAttribute('aria-modal', 'true');
-                    modal.style.display = 'block';
+                    // Match responsive behavior of other modals (centered flex container)
+                    modal.style.display = 'flex';
+                    // Prevent background scroll while modal is open
+                    document.body.style.overflow = 'hidden';
                     
                     // Focus trap
                     trapFocusLab11(modal);
@@ -19017,7 +19020,7 @@
                 
                 // Escape key handler
                 document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && modal.style.display === 'block') {
+                    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
                         closeModalLab11(id);
                     }
                 });
@@ -19110,6 +19113,8 @@
                 
                 // Set aria-hidden after removing focus
                 modal.setAttribute('aria-hidden', 'true');
+                // Restore background scroll
+                document.body.style.overflow = '';
                 
                 // Restore focus to the show button
                 if (showBtn) {
