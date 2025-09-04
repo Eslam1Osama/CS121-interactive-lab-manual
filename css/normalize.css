@@ -1,0 +1,43 @@
+/* Minimal modern CSS reset to normalize default styles across browsers */
+/* Box sizing and margin reset */
+* , *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+/* Improve typography defaults */
+html { line-height: 1.15; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+
+/* Font rendering and fallback stack */
+html, body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+body { font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; }
+
+/* Media defaults */
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+img { height: auto; }
+
+/* Form elements inherit fonts */
+input, button, textarea, select { font: inherit; }
+
+/* Mobile tap highlight + consistent focus ring */
+a, button, [role="button"], input, select, textarea {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* Keep native outlines for a11y, but standardize visible focus */
+:focus { outline: none; }
+:focus-visible {
+	outline: 2px solid var(--secondary, #3498db);
+	outline-offset: 2px;
+}
+
+/* Remove animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	* { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+

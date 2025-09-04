@@ -10,7 +10,7 @@
     'use strict';
 
     function isMobileWidth() {
-        return window.matchMedia('(max-width: 700px)').matches;
+        return window.matchMedia('(max-width: 600px)').matches;
     }
 
     function createLightbox() {

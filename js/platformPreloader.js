@@ -43,27 +43,52 @@
         
         applyTheme: function() {
             const body = document.body;
-            
-            if (this.currentTheme === 'light') {
-                body.classList.add('light-mode');
-            } else {
-                body.classList.remove('light-mode');
-            }
-            
+            const isLight = this.currentTheme === 'light';
+            // Keep legacy class for existing CSS while moving to data-theme tokens
+            body.classList.toggle('light-mode', isLight);
+            document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
             // Update theme color meta tag
             const themeColorMeta = document.querySelector('meta[name="theme-color"]');
             if (themeColorMeta) {
-                themeColorMeta.setAttribute('content', this.currentTheme === 'light' ? '#1976d2' : '#3498db');
+                themeColorMeta.setAttribute('content', isLight ? '#1976d2' : '#3498db');
             }
-            
-            // Update theme toggle button state
+            // Update theme toggle button/icon state
             this.updateThemeToggleState();
         },
         
         toggleTheme: function() {
-            this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('cs121-theme', this.currentTheme);
-            this.applyTheme();
+            // Debounce rapid toggles
+            if (this._toggleBusy) return;
+            this._toggleBusy = true;
+
+            const nextTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+            const apply = () => {
+                this.currentTheme = nextTheme;
+                localStorage.setItem('cs121-theme', this.currentTheme);
+                this.applyTheme();
+                // Clear switching flags
+                document.documentElement.classList.remove('theme-switching');
+                document.documentElement.classList.remove('theme-fade');
+                this._toggleBusy = false;
+            };
+
+            try {
+                // Add suppression class to avoid heavy per-element transitions
+                document.documentElement.classList.add('theme-switching');
+                // Use View Transitions API if available
+                if (document.startViewTransition) {
+                    document.startViewTransition(apply);
+                } else {
+                    // Fallback: brief fade class to smooth change
+                    document.documentElement.classList.add('theme-fade');
+                    // Batch DOM updates to next frame for smoother paint
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(apply);
+                    });
+                }
+            } catch (e) {
+                apply();
+            }
         },
         
         setupThemeToggle: function() {
@@ -77,10 +102,21 @@
         
         updateThemeToggleState: function() {
             const themeToggle = document.getElementById('themeToggle');
+            const isLight = this.currentTheme === 'light';
             if (themeToggle) {
+                // Update button style classes
+                themeToggle.classList.toggle('sun', isLight);
+                themeToggle.classList.toggle('moon', !isLight);
+                // Update icon SVG and state
                 const icon = themeToggle.querySelector('.theme-toggle-icon');
                 if (icon) {
-                    icon.classList.toggle('toggled', this.currentTheme === 'light');
+                    if (isLight) {
+                        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 2.25zm0 16.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm9-6.75a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm-16.5 0a.75.75 0 01-.75.75H2.25a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm12.72-5.47a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm-9.19 9.19a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm12.02 1.06a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zm-9.19-9.19a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zM12 6.75a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5z"/></svg>';
+                        icon.classList.remove('toggled');
+                    } else {
+                        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>';
+                        icon.classList.add('toggled');
+                    }
                 }
             }
         },
@@ -367,32 +403,16 @@
         },
         
         setupTouchOptimizations: function() {
-            if (platform.isMobile || window.isTouchDevice()) {
+            if (platform.isMobile) {
                 // Add touch-friendly styles
                 document.body.classList.add('touch-device');
                 
-                // Optimize touch targets with enhanced sizing for mobile
+                // Optimize touch targets
                 const touchTargets = document.querySelectorAll('button, a, input, select, textarea');
                 touchTargets.forEach(target => {
-                    const minSize = window.isMobileWidth() ? '48px' : '44px';
-                    target.style.minHeight = minSize;
-                    target.style.minWidth = minSize;
-                    target.style.touchAction = 'manipulation';
+                    target.style.minHeight = '44px';
+                    target.style.minWidth = '44px';
                 });
-                
-                // Ensure expand buttons are visible on mobile
-                if (window.isMobileWidth()) {
-                    setTimeout(() => {
-                        const expandBtns = document.querySelectorAll('.btn-info');
-                        expandBtns.forEach(btn => {
-                            if (btn.innerHTML.includes('Expand') || btn.innerHTML.includes('fa-expand')) {
-                                btn.style.display = 'inline-flex';
-                                btn.style.minHeight = '48px';
-                                btn.style.minWidth = '48px';
-                            }
-                        });
-                    }, 100);
-                }
             }
         },
         
@@ -422,47 +442,6 @@
                     manifestLink.remove();
                 }
             }
-        },
-        
-        setupEnterpriseErrorHandling: function() {
-            // Suppress chrome-extension console warnings in production
-            if (platform.isProduction) {
-                const originalWarn = console.warn;
-                console.warn = function(...args) {
-                    const message = args[0] || '';
-                    if (typeof message === 'string' && (
-                        message.includes('chrome-extension://') ||
-                        message.includes('moz-extension://') ||
-                        message.includes('ms-browser-extension://') ||
-                        message.includes('Extension loading error')
-                    )) {
-                        return; // Suppress extension-related warnings
-                    }
-                    originalWarn.apply(console, args);
-                };
-            }
-            
-            // Global error handler for edge cases
-            window.addEventListener('error', function(event) {
-                // Handle script loading errors gracefully
-                if (event.target && event.target.tagName === 'SCRIPT') {
-                    console.warn('Script failed to load:', event.target.src);
-                    event.preventDefault();
-                }
-                
-                // Handle image loading errors
-                if (event.target && event.target.tagName === 'IMG') {
-                    event.target.style.display = 'none';
-                    console.warn('Image failed to load:', event.target.src);
-                    event.preventDefault();
-                }
-            });
-            
-            // Handle unhandled promise rejections
-            window.addEventListener('unhandledrejection', function(event) {
-                console.warn('Unhandled promise rejection:', event.reason);
-                event.preventDefault();
-            });
         }
     };
     
@@ -572,7 +551,6 @@
         performanceOptimizer.init();
         accessibilityEnhancer.init();
         platformOptimizer.init();
-        platformOptimizer.setupEnterpriseErrorHandling();
         errorHandler.init();
         
         // Mark platform as ready
@@ -589,52 +567,7 @@
             document.body.classList.add('local-file-mode');
         }
         
-        // Critical: Ensure mobile responsiveness synchronization
-        setupMobileSync();
-        
         // Platform initialization complete - no console logging for clean user experience
-    }
-    
-    // Enhanced Mobile Synchronization System
-    function setupMobileSync() {
-        function syncMobileFeatures() {
-            const isMobile = window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
-            
-            if (isMobile) {
-                document.body.classList.add('mobile-active');
-                
-                // Force expand button visibility - Critical Fix
-                setTimeout(() => {
-                    const expandBtns = document.querySelectorAll('.btn-info');
-                    expandBtns.forEach(btn => {
-                        if (btn.innerHTML && (btn.innerHTML.includes('Expand') || btn.innerHTML.includes('fa-expand'))) {
-                            btn.style.display = 'inline-flex';
-                            btn.style.visibility = 'visible';
-                            btn.style.opacity = '1';
-                            // Override any conflicting styles
-                            btn.style.setProperty('display', 'inline-flex', 'important');
-                        }
-                    });
-                }, 100);
-            } else {
-                document.body.classList.remove('mobile-active');
-            }
-        }
-        
-        // Initial sync
-        syncMobileFeatures();
-        
-        // Sync on resize and orientation change
-        window.addEventListener('resize', syncMobileFeatures, { passive: true });
-        window.addEventListener('orientationchange', syncMobileFeatures);
-        
-        // Additional sync after DOM changes (for dynamically loaded content)
-        if (window.MutationObserver) {
-            const observer = new MutationObserver(() => {
-                syncMobileFeatures();
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-        }
     }
     
     // Initialize when DOM is ready

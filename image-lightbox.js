@@ -24,13 +24,7 @@
     ]);
 
     function isMobileWidth() {
-        // Use global function if available, fallback to local implementation
-        return window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
-    }
-    
-    function isTouchDevice() {
-        // Use global function if available, fallback to local implementation
-        return window.isTouchDevice ? window.isTouchDevice() : ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
+        return window.matchMedia('(max-width: 600px)').matches;
     }
 
     function createLightbox() {
@@ -81,7 +75,7 @@
         var isOpen = false;
 
         function openLightbox(src) {
-            if (!isMobileWidth() && !isTouchDevice()) return;
+            if (!isMobileWidth()) return;
             if (!lightbox) {
                 lightbox = createLightbox();
                 lightbox.wrapper.addEventListener('click', function(e) {
@@ -105,32 +99,12 @@
             isOpen = true;
             // Attach resize/orientation listeners to auto-close when leaving mobile
             resizeHandler = function() {
-                if (isOpen && !isMobileWidth() && !isTouchDevice()) {
+                if (isOpen && !isMobileWidth()) {
                     closeLightbox();
                 }
             };
             window.addEventListener('resize', resizeHandler, { passive: true });
             window.addEventListener('orientationchange', resizeHandler);
-            
-            // Enhanced touch support for swipe gestures
-            if (isTouchDevice()) {
-                var startY = 0;
-                var currentY = 0;
-                
-                lightbox.container.addEventListener('touchstart', function(e) {
-                    startY = e.touches[0].clientY;
-                }, { passive: true });
-                
-                lightbox.container.addEventListener('touchmove', function(e) {
-                    currentY = e.touches[0].clientY;
-                    var deltaY = currentY - startY;
-                    
-                    // Swipe down to close
-                    if (deltaY > 100) {
-                        closeLightbox();
-                    }
-                }, { passive: true });
-            }
         }
 
         function closeLightbox() {
@@ -150,16 +124,12 @@
         }
 
         function updateCursors() {
-            var mobile = isMobileWidth() || isTouchDevice();
+            var mobile = isMobileWidth();
             images.forEach(function(img) {
                 try {
                     var src = img.getAttribute('src') || '';
                     if (!TARGET_IMAGES.has(src)) return;
-                    img.style.cursor = mobile ? 'zoom-in' : 'pointer';
-                    // Enhanced accessibility
-                    img.setAttribute('role', 'button');
-                    img.setAttribute('aria-label', 'Click to view full size image');
-                    img.setAttribute('tabindex', '0');
+                    img.style.cursor = mobile ? 'zoom-in' : 'default';
                 } catch (_) { /* no-op */ }
             });
         }
@@ -171,33 +141,11 @@
                 if (!TARGET_IMAGES.has(src)) return;
 
                 img.addEventListener('click', function() {
-                    if (isMobileWidth() || isTouchDevice()) {
+                    if (isMobileWidth()) {
                         // Use currentSrc when available for responsive images
                         openLightbox(img.currentSrc || src);
                     }
                 });
-                
-                // Enhanced keyboard accessibility
-                img.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        if (isMobileWidth() || isTouchDevice()) {
-                            openLightbox(img.currentSrc || src);
-                        }
-                    }
-                });
-                
-                // Visual feedback for non-touch devices
-                if (!isTouchDevice()) {
-                    img.addEventListener('mouseenter', function() {
-                        img.style.transform = 'scale(1.02)';
-                        img.style.transition = 'transform 0.2s ease';
-                    });
-                    
-                    img.addEventListener('mouseleave', function() {
-                        img.style.transform = 'scale(1)';
-                    });
-                }
             } catch (_) { /* no-op */ }
         });
 

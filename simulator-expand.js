@@ -32,8 +32,7 @@
         if (!containers || containers.length === 0) return;
 
         function isMobileWidth(){
-            // Use global function if available, fallback to local implementation
-            return window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
+            return window.matchMedia('(max-width: 700px)').matches;
         }
 
         containers.forEach(function(simContainer){

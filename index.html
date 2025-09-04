@@ -34,7 +34,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="48x48" href="media/favicon-48x48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png" onerror="this.style.display='none'">
+    <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png">
     <link rel="manifest" href="media/site.webmanifest" id="pwa-manifest">
     <meta name="theme-color" content="#3498db">
     <meta name="msapplication-TileColor" content="#3498db">
@@ -67,76 +67,14 @@
     <meta name="msapplication-TileColor" content="#3498db">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/theme-dark.css">
+    <link rel="stylesheet" href="css/theme-light.css">
+    <link rel="stylesheet" href="css/theme-transition.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/platformPreloader.js"></script>
-    <script>
-        // Global Mobile Width Utility - Ensures consistent breakpoint across all components
-        window.isMobileWidth = function() {
-            return window.matchMedia('(max-width: 700px)').matches;
-        };
-        
-        // Enhanced touch device detection
-        window.isTouchDevice = function() {
-            return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-        };
-        
-        // Combined mobile check (width OR touch device)
-        window.isMobileDevice = function() {
-            return window.isMobileWidth() || window.isTouchDevice();
-        };
-        
-        // Enterprise-level logo and asset error handling
-        window.ensureAssetVisibility = function() {
-            // Handle favicon errors gracefully
-            const faviconLinks = document.querySelectorAll('link[rel*="icon"]');
-            faviconLinks.forEach(link => {
-                if (!link.hasAttribute('onerror')) {
-                    link.setAttribute('onerror', "this.style.display='none'");
-                }
-            });
-            
-            // Monitor critical asset loading
-            const criticalImages = document.querySelectorAll('img[src*="media/"]');
-            criticalImages.forEach(img => {
-                if (!img.hasAttribute('onerror')) {
-                    img.setAttribute('onerror', "this.style.display='none'; console.warn('Failed to load:', this.src);");
-                }
-            });
-        };
-        
-        // Initialize asset monitoring
-        document.addEventListener('DOMContentLoaded', window.ensureAssetVisibility);
-    </script>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #1a2a3a;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --info: #17a2b8;
-            --info-hover: #138496;
-            --gray: #7f8c8d;
-            --text: #ecf0f1;
-            --card-bg: rgba(30, 40, 51, 0.9);
-            --card-border: rgba(52, 152, 219, 0.3);
-            --secondary-bg: rgba(40, 50, 60, 0.7);
-            --border: rgba(52, 152, 219, 0.4);
-            --input-bg: rgba(40, 50, 60, 0.8);
-            --muted: rgba(236, 240, 241, 0.6);
-            --transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-            --max-width: 1200px;
-            --gap-xs: 0.5rem;
-            --gap-sm: 1rem;
-            --gap-md: 2rem;
-            --gap-lg: 3rem;
-            --gap-xl: 5rem;
-            --bg-primary: rgba(30, 40, 51, 0.95);
-            --bg-secondary: rgba(40, 50, 60, 0.8);
-        }
         
         * {
             margin: 0;
@@ -212,54 +150,7 @@
             transition: var(--transition);
         }
         
-        /* Light mode variables */
-        body.light-mode {
-            --primary: #f5f7fa;
-            --secondary: #1976d2;
-            --accent: #d84315;
-            --light: #222;
-            --dark: #fff;
-            --text: #222;
-            --success: #388e3c;
-            --warning: #ffa000;
-            --info: #0d6efd;
-            --info-hover: #0b5ed7;
-            --gray: #b0bec5;
-            --card-bg: #fff;
-            --card-border: #e3eaf2;
-            --secondary-bg: #f8fafc;
-            --border: #bbdefb;
-            --input-bg: #f8fafc;
-            --muted: #b0bec5;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-        }
-        body.light-mode {
-            background: linear-gradient(135deg, #e3eaf2 0%, #f5f7fa 100%);
-            color: var(--light);
-        }
-        body.light-mode header {
-            background: linear-gradient(120deg, #f7fbff 0%, #e3eaf2 60%, #bbdefb 100%);
-            border-bottom: 2px solid var(--secondary);
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
-        }
-        body.light-mode .sidebar {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.08);
-        }
-        body.light-mode .main-content {
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            border-radius: 15px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-            transition: background-color 0.3s, color 0.3s;
-        }
+        /* Light theme overrides moved to css/theme-light.css */
         body.light-mode .lab-section {
             background: #f8fafc;
             border: 1px solid #e3eaf2;
@@ -1693,476 +1584,6 @@
             }
         }
         
-        /* ====================================================================================== */
-        /* COMPREHENSIVE CROSS-BROWSER & CROSS-DEVICE COMPATIBILITY ENHANCEMENTS */
-        /* ====================================================================================== */
-        
-        /* CRITICAL: Standardized Mobile Breakpoint for JavaScript-CSS Synchronization */
-        /* This ensures expand buttons and responsive features work consistently across all devices */
-        @media (max-width: 700px) {
-            /* Force expand button visibility for all simulators */
-            .btn-info[style*="display: none"] {
-                display: inline-flex !important;
-            }
-            
-            /* Ensure all interactive elements are touch-optimized */
-            button, .btn, .input-switch, .k-map-input {
-                min-height: 48px !important;
-                min-width: 48px !important;
-                touch-action: manipulation;
-            }
-            
-            /* Enhanced cursor indicators for mobile */
-            .image-frame img, .responsive-img {
-                cursor: zoom-in !important;
-            }
-            
-            /* Mobile-specific simulator adjustments */
-            .simulator {
-                grid-template-columns: 1fr !important;
-                gap: 1.5rem !important;
-            }
-        }
-        
-        /* Enhanced Mobile State Management */
-        body.mobile-active .btn-info {
-            /* Ensure expand buttons are always visible on mobile */
-            display: inline-flex !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-        
-        body.mobile-active .btn-info[style*="display: none"] {
-            /* Override any inline styles that hide expand buttons */
-            display: inline-flex !important;
-        }
-        
-        /* Touch device optimizations */
-        body.touch-device .btn, 
-        body.touch-device button {
-            min-height: 48px;
-            min-width: 48px;
-            padding: 0.75rem 1rem;
-        }
-        
-        /* Enhanced mobile responsive system */
-        @media (max-width: 700px) {
-            /* Ensure consistent mobile behavior */
-            body {
-                --mobile-touch-size: 48px;
-            }
-            
-            /* All expand buttons must be visible */
-            .btn-info {
-                display: inline-flex !important;
-                min-height: var(--mobile-touch-size) !important;
-                min-width: var(--mobile-touch-size) !important;
-            }
-        }
-        
-        /* 1. Universal Touch and Interaction Optimization */
-        button, .btn, .input-switch, .k-map-input, .gate-btn, .control-btn {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            /* Ensure minimum touch target size (44px) for accessibility */
-            min-height: 44px;
-            min-width: 44px;
-        }
-        
-        /* 2. Enhanced Image Cross-Browser Support */
-        img, .responsive-img {
-            -webkit-user-drag: none;
-            -khtml-user-drag: none;
-            -moz-user-drag: none;
-            -o-user-drag: none;
-            /* Prevent image selection on touch devices */
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            /* Enhanced image rendering */
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-        }
-        
-        /* 3. Universal Scrollbar Styling */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: var(--secondary) var(--card-bg);
-        }
-        
-        *::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        *::-webkit-scrollbar-track {
-            background: var(--card-bg);
-            border-radius: 4px;
-        }
-        
-        *::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 4px;
-            border: 1px solid var(--card-bg);
-        }
-        
-        *::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-        
-        /* 4. Enhanced Modal System Cross-Browser Support */
-        .modal-overlay {
-            /* Prevent iOS Safari bounce scrolling */
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            /* Enhanced backdrop blur support */
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        
-        /* 5. Progressive Web App Enhancements */
-        @supports (display: standalone) {
-            body {
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-            
-            header {
-                padding-top: calc(0.6rem + env(safe-area-inset-top));
-            }
-        }
-        
-        /* 6. iOS Safari Specific Fixes */
-        @supports (-webkit-touch-callout: none) {
-            .modal-overlay {
-                /* Fix iOS Safari modal positioning */
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                height: -webkit-fill-available;
-            }
-            
-            /* Prevent iOS Safari zoom on input focus */
-            input, select, textarea {
-                font-size: 16px;
-            }
-        }
-        
-        /* 7. Enhanced Accessibility Features */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: var(--accent);
-            color: white;
-            padding: 8px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 1000;
-        }
-        
-        .skip-link:focus {
-            top: 6px;
-        }
-        
-        /* Enhanced keyboard navigation */
-        .k-map-input:focus {
-            outline: 3px solid var(--accent);
-            outline-offset: 2px;
-            z-index: 10;
-        }
-        
-        /* Enhanced button focus states */
-        .btn:focus, button:focus {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
-        }
-        
-        /* Exception: Help and Theme toggle buttons maintain clean styling */
-        /* These buttons have custom focus/hover effects and don't need the standard outline */
-        .help-toggle-btn:focus, .theme-toggle-btn:focus {
-            outline: none !important;
-            box-shadow: none !important;
-            /* Override any global focus rules */
-            border: none !important;
-        }
-        
-        /* 8. Enhanced Touch Device Optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            /* Optimize for touch devices */
-            .btn, button {
-                min-height: 48px;
-                min-width: 48px;
-                padding: 0.75rem 1rem;
-            }
-            
-            /* Hide tooltips on touch devices or show on long press */
-            .sim-tooltip {
-                display: none;
-            }
-            
-            /* Enhanced touch feedback */
-            .btn:active, button:active {
-                transform: scale(0.98);
-                transition: transform 0.1s ease;
-            }
-        }
-        
-        /* 9. High DPI Display Support */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .btn, button {
-                border-width: 0.5px;
-            }
-            
-            .modal-container {
-                border-width: 0.5px;
-            }
-            
-            img, .responsive-img {
-                image-rendering: -webkit-optimize-contrast;
-            }
-        }
-        
-        /* 10. Reduced Motion Support */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            
-            .modal-container {
-                animation: none !important;
-            }
-        }
-        
-        /* 11. Enhanced Mobile Breakpoint System */
-        @media (max-width: 1024px) {
-            /* Large tablets optimization */
-            .btn, button {
-                min-height: 48px;
-                min-width: 48px;
-                padding: 0.75rem 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            /* Enhanced mobile optimization */
-            .btn, button {
-                min-height: 44px;
-                min-width: 44px;
-                font-size: 0.9rem;
-            }
-            
-            .section-title {
-                font-size: 1.1rem;
-            }
-        }
-        
-        @media (max-width: 360px) {
-            /* Ultra-compact mobile optimization */
-            .btn, button {
-                min-height: 40px;
-                min-width: 40px;
-                font-size: 0.85rem;
-                padding: 0.5rem 0.75rem;
-            }
-        }
-        
-        /* 12. Enhanced Modal Animation System */
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        
-        .modal-container {
-            animation: modalSlideIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        /* 13. Enhanced Device Orientation Support */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .modal-overlay {
-                padding: 0.25rem;
-            }
-            
-            .modal-container {
-                max-height: 96vh;
-                border-radius: 8px;
-            }
-            
-            .modal-header {
-                padding: 0.75rem 1rem;
-            }
-            
-            .modal-content {
-                padding: 1rem;
-            }
-            
-            .modal-footer {
-                padding: 0.75rem 1rem;
-            }
-        }
-        
-        /* ====================================================================================== */
-        /* ENTERPRISE-LEVEL CROSS-PLATFORM OPTIMIZATIONS */
-        /* ====================================================================================== */
-        
-        /* Logo and favicon visibility enhancements */
-        link[rel*="icon"] {
-            /* Ensure favicons don't cause layout issues if they fail to load */
-            display: inline;
-            visibility: visible;
-        }
-        
-        /* Enhanced header logo visibility across all platforms */
-        header img, .logo, .brand-logo {
-            /* Cross-platform image rendering optimization */
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-            /* Prevent logo from disappearing on load errors */
-            min-height: 24px;
-            min-width: 24px;
-            /* Ensure proper z-index for visibility */
-            z-index: 10;
-            /* Smooth loading transition */
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* iOS Safari specific optimizations */
-        @supports (-webkit-appearance: none) {
-            /* iOS Safari viewport optimization */
-            body {
-                -webkit-text-size-adjust: 100%;
-                -webkit-tap-highlight-color: transparent;
-            }
-            
-            /* iOS Safari safe area support */
-            header {
-                padding-top: max(1.5rem, env(safe-area-inset-top));
-            }
-            
-            /* iOS Safari button optimization */
-            button, .btn {
-                -webkit-appearance: none;
-                appearance: none;
-                border-radius: 8px;
-            }
-        }
-        
-        /* Android Chrome specific optimizations */
-        @media screen and (-webkit-min-device-pixel-ratio: 1.5) {
-            /* High DPI Android optimization */
-            .theme-toggle-btn, .help-toggle-btn {
-                border-width: 0.5px;
-            }
-            
-            /* Enhanced touch targets for Android */
-            button, .btn {
-                min-height: 48px;
-                min-width: 48px;
-            }
-        }
-        
-        /* Windows Edge/Chrome optimizations */
-        @supports (-ms-accelerator: true) {
-            /* Edge legacy support */
-            .modal-overlay {
-                backdrop-filter: none;
-            }
-        }
-        
-        /* Firefox specific optimizations */
-        @-moz-document url-prefix() {
-            /* Firefox scrollbar styling */
-            * {
-                scrollbar-width: thin;
-                scrollbar-color: var(--secondary) var(--card-bg);
-            }
-        }
-        
-        /* Cross-platform form element consistency */
-        input, select, textarea {
-            /* Normalize appearance across platforms */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            /* Consistent sizing */
-            box-sizing: border-box;
-            /* Prevent zoom on iOS */
-            font-size: max(16px, 1rem);
-        }
-        
-        /* Enhanced accessibility for all platforms */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-        
-        @media (prefers-high-contrast: active) {
-            /* High contrast mode support */
-            .btn, button {
-                border: 2px solid;
-            }
-            
-            .modal-overlay {
-                background: rgba(0, 0, 0, 0.9);
-            }
-        }
-        
-        /* Print stylesheet optimization */
-        @media print {
-            /* Hide interactive elements when printing */
-            .theme-toggle-btn, .help-toggle-btn, .btn-info {
-                display: none !important;
-            }
-            
-            /* Optimize content for printing */
-            .lab-section {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-        }
-        
-        /* Landscape orientation optimizations */
-        @media screen and (orientation: landscape) and (max-height: 500px) {
-            /* Optimize header for landscape mobile */
-            header {
-                padding: 0.5rem;
-            }
-            
-            .theme-toggle-btn, .help-toggle-btn {
-                top: 0.5rem;
-            }
-        }
-        
-        /* ====================================================================================== */
-        /* END ENTERPRISE-LEVEL CROSS-PLATFORM OPTIMIZATIONS */
-        /* ====================================================================================== */
-        
-        /* ====================================================================================== */
-        /* END COMPREHENSIVE COMPATIBILITY ENHANCEMENTS */
-        /* ====================================================================================== */
-        
         /* BCD to Excess-3 Simulator Horizontal Layout Styles - Enhanced to match Lab 1 responsive pattern */
         /* Note: Outer simulator-container removed, inner bcd-excess3-sim-card expanded to full width */
         .bcd-excess3-sim-card {
@@ -3368,9 +2789,7 @@
         }
         
         .help-toggle-btn:hover, .help-toggle-btn:focus {
-            outline: none !important;
-            border: none !important;
-            box-shadow: none !important;
+            outline: none;
         }
         .theme-toggle-icon,
         .help-toggle-icon {
@@ -8940,18 +8359,20 @@
 </head>
 <body>
     <script>
-        // Apply initial theme immediately to prevent dark-to-light flash on first paint
+        // Apply initial theme ASAP to prevent flash; mirrors platformPreloader settings
         (function(){
             try {
                 var saved = localStorage.getItem('cs121-theme');
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 var useLight = saved ? (saved === 'light') : !prefersDark;
+                // Set data-theme for token overrides and keep body class for legacy selectors
                 if (useLight) {
+                    document.documentElement.setAttribute('data-theme', 'light');
                     document.body.classList.add('light-mode');
                 } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
                     document.body.classList.remove('light-mode');
                 }
-                // Sync browser theme color early for seamless address bar color
                 var meta = document.querySelector('meta[name="theme-color"]');
                 if (meta) meta.setAttribute('content', useLight ? '#1976d2' : '#3498db');
             } catch (_) { /* no-op */ }
@@ -18456,35 +17877,7 @@
         });
 
 
-        // Theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        function setTheme(mode) {
-            if (mode === 'light') {
-                document.body.classList.add('light-mode');
-                themeToggle.classList.add('sun');
-                themeToggle.classList.remove('moon');
-                // Only update the icon's content and class, do not replace the button or span
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 2.25zm0 16.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm9-6.75a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm-16.5 0a.75.75 0 01-.75.75H2.25a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm12.72-5.47a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm-9.19 9.19a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm12.02 1.06a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zm-9.19-9.19a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zM12 6.75a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5z"/></svg>`;
-                themeIcon.classList.remove('toggled');
-            } else {
-                document.body.classList.remove('light-mode');
-                themeToggle.classList.add('moon');
-                themeToggle.classList.remove('sun');
-                // Only update the icon's content and class, do not replace the button or span
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>`;
-                themeIcon.classList.add('toggled');
-            }
-            localStorage.setItem('theme', mode);
-        }
-        themeToggle.addEventListener('click', () => {
-            const isLight = document.body.classList.contains('light-mode');
-            setTheme(isLight ? 'dark' : 'light');
-        });
-        // On load, set theme
-        const savedTheme = localStorage.getItem('theme');
-        setTheme(savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light'));
+        // Theme toggle is managed by platformPreloader.js to avoid duplication
         
         // Lab navigation and TOC dropdown logic
         const sidebarHamburger = document.getElementById('sidebarHamburger');

@@ -1,0 +1,31 @@
+/* Default dark theme tokens */
+:root {
+	--primary: #2c3e50;
+	--secondary: #3498db;
+	--accent: #e74c3c;
+	--light: #ecf0f1;
+	--dark: #1a2a3a;
+	--success: #27ae60;
+	--warning: #f39c12;
+	--info: #17a2b8;
+	--info-hover: #138496;
+	--gray: #7f8c8d;
+	--text: #ecf0f1;
+	--card-bg: rgba(30, 40, 51, 0.9);
+	--card-border: rgba(52, 152, 219, 0.3);
+	--secondary-bg: rgba(40, 50, 60, 0.7);
+	--border: rgba(52, 152, 219, 0.4);
+	--input-bg: rgba(40, 50, 60, 0.8);
+	--muted: rgba(236, 240, 241, 0.6);
+	--transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+	--max-width: 1200px;
+	--gap-xs: 0.5rem;
+	--gap-sm: 1rem;
+	--gap-md: 2rem;
+	--gap-lg: 3rem;
+	--gap-xl: 5rem;
+	--bg-primary: rgba(30, 40, 51, 0.95);
+	--bg-secondary: rgba(40, 50, 60, 0.8);
+}
+
+

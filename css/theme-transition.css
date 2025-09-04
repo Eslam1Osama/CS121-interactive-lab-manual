@@ -1,0 +1,43 @@
+/* Optimized, smooth theme switching without heavy per-element transitions */
+
+/* Default duration; respects reduced motion */
+:root {
+	--theme-fade-duration: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root { --theme-fade-duration: 0ms; }
+}
+
+/* When toggling theme, suppress descendant transitions to avoid repaint storms */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+	transition: none !important;
+}
+
+/* View Transitions API: cross-fade whole page if supported */
+html {
+	view-transition-name: root;
+}
+
+/* Tune the transition duration */
+html::view-transition-old(root),
+html::view-transition-new(root) {
+	animation-duration: var(--theme-fade-duration);
+	animation-timing-function: ease;
+}
+
+/* Fallback: fade key containers slightly during switch for a polished feel */
+@supports not (view-transition-name: root) {
+	html.theme-fade body,
+	html.theme-fade header,
+	html.theme-fade .main-content,
+	html.theme-fade .sidebar,
+	html.theme-fade .footer {
+		transition: opacity var(--theme-fade-duration) ease;
+		opacity: 0.97;
+	}
+}
+
+

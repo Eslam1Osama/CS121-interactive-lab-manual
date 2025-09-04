@@ -7,8 +7,7 @@
     'use strict';
 
     function isMobileWidth(){
-        // Use global function if available, fallback to local implementation
-        return window.isMobileWidth ? window.isMobileWidth() : window.matchMedia('(max-width: 700px)').matches;
+        return window.matchMedia('(max-width: 700px)').matches;
     }
 
     function createModal(simContent){

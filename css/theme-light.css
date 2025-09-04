@@ -1,0 +1,45 @@
+/* Light theme tokens and component refinements */
+:root[data-theme="light"] {
+	--primary: #f5f7fa;
+	--secondary: #1976d2;
+	--accent: #d84315;
+	--light: #222;
+	--dark: #fff;
+	--text: #222;
+	--success: #388e3c;
+	--warning: #ffa000;
+	--info: #0d6efd;
+	--info-hover: #0b5ed7;
+	--gray: #b0bec5;
+	--card-bg: #fff;
+	--card-border: #e3eaf2;
+	--secondary-bg: #f8fafc;
+	--border: #bbdefb;
+	--input-bg: #f8fafc;
+	--muted: #b0bec5;
+	--bg-primary: #ffffff;
+	--bg-secondary: #f8fafc;
+}
+
+/* Example component-specific tweaks under light theme (mapping existing styles) */
+:root[data-theme="light"] body {
+	background: linear-gradient(135deg, #e3eaf2 0%, #f5f7fa 100%);
+	color: var(--light);
+}
+
+:root[data-theme="light"] header {
+	background: linear-gradient(120deg, #f7fbff 0%, #e3eaf2 60%, #bbdefb 100%);
+	border-bottom: 2px solid var(--secondary);
+	box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
+}
+
+:root[data-theme="light"] .sidebar,
+:root[data-theme="light"] .main-content {
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Keep additional light-mode component refinements in this file as needed */
+
+
