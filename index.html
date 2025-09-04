@@ -28,13 +28,13 @@
     <meta name="rating" content="general">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://cs-121-interactive-lab-manual.vercel.app/">
+    <link rel="canonical" href="https://cs121-labs.msa.edu.eg/">
     
     <!-- Favicon Configuration -->
     <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="48x48" href="media/favicon-48x48.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png" onerror="this.style.display='none'">
     <link rel="manifest" href="media/site.webmanifest" id="pwa-manifest">
     <meta name="theme-color" content="#3498db">
     <meta name="msapplication-TileColor" content="#3498db">
@@ -42,10 +42,10 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cs-121-interactive-lab-manual.vercel.app/">
+    <meta property="og:url" content="https://cs121-labs.msa.edu.eg/">
     <meta property="og:title" content="CS121 Digital Logic Design - Interactive Lab Manual">
     <meta property="og:description" content="Comprehensive interactive lab manual for CS121 Digital Logic Design course. Features 11 complete lab experiments with interactive simulators, K-Map tools, and real-time circuit simulation.">
-    <meta property="og:image" content="https://cs-121-interactive-lab-manual.vercel.app/media/apple-touch-icon.png">
+    <meta property="og:image" content="https://cs121-labs.msa.edu.eg/media/apple-touch-icon.png">
     <meta property="og:image:width" content="180">
     <meta property="og:image:height" content="180">
     <meta property="og:image:alt" content="CS121 Digital Logic Design Lab Manual">
@@ -54,10 +54,10 @@
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cs-121-interactive-lab-manual.vercel.app/">
+    <meta property="twitter:url" content="https://cs121-labs.msa.edu.eg/">
     <meta property="twitter:title" content="CS121 Digital Logic Design - Interactive Lab Manual">
     <meta property="twitter:description" content="Comprehensive interactive lab manual for CS121 Digital Logic Design course. Features 11 complete lab experiments with interactive simulators, K-Map tools, and real-time circuit simulation.">
-    <meta property="twitter:image" content="https://cs-121-interactive-lab-manual.vercel.app/media/apple-touch-icon.png">
+    <meta property="twitter:image" content="https://cs121-labs.msa.edu.eg/media/apple-touch-icon.png">
     <meta property="twitter:image:alt" content="CS121 Digital Logic Design Lab Manual">
     
     <!-- Additional Meta Tags -->
@@ -85,6 +85,28 @@
         window.isMobileDevice = function() {
             return window.isMobileWidth() || window.isTouchDevice();
         };
+        
+        // Enterprise-level logo and asset error handling
+        window.ensureAssetVisibility = function() {
+            // Handle favicon errors gracefully
+            const faviconLinks = document.querySelectorAll('link[rel*="icon"]');
+            faviconLinks.forEach(link => {
+                if (!link.hasAttribute('onerror')) {
+                    link.setAttribute('onerror', "this.style.display='none'");
+                }
+            });
+            
+            // Monitor critical asset loading
+            const criticalImages = document.querySelectorAll('img[src*="media/"]');
+            criticalImages.forEach(img => {
+                if (!img.hasAttribute('onerror')) {
+                    img.setAttribute('onerror', "this.style.display='none'; console.warn('Failed to load:', this.src);");
+                }
+            });
+        };
+        
+        // Initialize asset monitoring
+        document.addEventListener('DOMContentLoaded', window.ensureAssetVisibility);
     </script>
     <style>
         :root {
@@ -1995,6 +2017,147 @@
                 padding: 0.75rem 1rem;
             }
         }
+        
+        /* ====================================================================================== */
+        /* ENTERPRISE-LEVEL CROSS-PLATFORM OPTIMIZATIONS */
+        /* ====================================================================================== */
+        
+        /* Logo and favicon visibility enhancements */
+        link[rel*="icon"] {
+            /* Ensure favicons don't cause layout issues if they fail to load */
+            display: inline;
+            visibility: visible;
+        }
+        
+        /* Enhanced header logo visibility across all platforms */
+        header img, .logo, .brand-logo {
+            /* Cross-platform image rendering optimization */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            /* Prevent logo from disappearing on load errors */
+            min-height: 24px;
+            min-width: 24px;
+            /* Ensure proper z-index for visibility */
+            z-index: 10;
+            /* Smooth loading transition */
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* iOS Safari specific optimizations */
+        @supports (-webkit-appearance: none) {
+            /* iOS Safari viewport optimization */
+            body {
+                -webkit-text-size-adjust: 100%;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* iOS Safari safe area support */
+            header {
+                padding-top: max(1.5rem, env(safe-area-inset-top));
+            }
+            
+            /* iOS Safari button optimization */
+            button, .btn {
+                -webkit-appearance: none;
+                appearance: none;
+                border-radius: 8px;
+            }
+        }
+        
+        /* Android Chrome specific optimizations */
+        @media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+            /* High DPI Android optimization */
+            .theme-toggle-btn, .help-toggle-btn {
+                border-width: 0.5px;
+            }
+            
+            /* Enhanced touch targets for Android */
+            button, .btn {
+                min-height: 48px;
+                min-width: 48px;
+            }
+        }
+        
+        /* Windows Edge/Chrome optimizations */
+        @supports (-ms-accelerator: true) {
+            /* Edge legacy support */
+            .modal-overlay {
+                backdrop-filter: none;
+            }
+        }
+        
+        /* Firefox specific optimizations */
+        @-moz-document url-prefix() {
+            /* Firefox scrollbar styling */
+            * {
+                scrollbar-width: thin;
+                scrollbar-color: var(--secondary) var(--card-bg);
+            }
+        }
+        
+        /* Cross-platform form element consistency */
+        input, select, textarea {
+            /* Normalize appearance across platforms */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Consistent sizing */
+            box-sizing: border-box;
+            /* Prevent zoom on iOS */
+            font-size: max(16px, 1rem);
+        }
+        
+        /* Enhanced accessibility for all platforms */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        @media (prefers-high-contrast: active) {
+            /* High contrast mode support */
+            .btn, button {
+                border: 2px solid;
+            }
+            
+            .modal-overlay {
+                background: rgba(0, 0, 0, 0.9);
+            }
+        }
+        
+        /* Print stylesheet optimization */
+        @media print {
+            /* Hide interactive elements when printing */
+            .theme-toggle-btn, .help-toggle-btn, .btn-info {
+                display: none !important;
+            }
+            
+            /* Optimize content for printing */
+            .lab-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* Landscape orientation optimizations */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            /* Optimize header for landscape mobile */
+            header {
+                padding: 0.5rem;
+            }
+            
+            .theme-toggle-btn, .help-toggle-btn {
+                top: 0.5rem;
+            }
+        }
+        
+        /* ====================================================================================== */
+        /* END ENTERPRISE-LEVEL CROSS-PLATFORM OPTIMIZATIONS */
+        /* ====================================================================================== */
         
         /* ====================================================================================== */
         /* END COMPREHENSIVE COMPATIBILITY ENHANCEMENTS */

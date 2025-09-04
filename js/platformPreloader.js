@@ -422,6 +422,47 @@
                     manifestLink.remove();
                 }
             }
+        },
+        
+        setupEnterpriseErrorHandling: function() {
+            // Suppress chrome-extension console warnings in production
+            if (platform.isProduction) {
+                const originalWarn = console.warn;
+                console.warn = function(...args) {
+                    const message = args[0] || '';
+                    if (typeof message === 'string' && (
+                        message.includes('chrome-extension://') ||
+                        message.includes('moz-extension://') ||
+                        message.includes('ms-browser-extension://') ||
+                        message.includes('Extension loading error')
+                    )) {
+                        return; // Suppress extension-related warnings
+                    }
+                    originalWarn.apply(console, args);
+                };
+            }
+            
+            // Global error handler for edge cases
+            window.addEventListener('error', function(event) {
+                // Handle script loading errors gracefully
+                if (event.target && event.target.tagName === 'SCRIPT') {
+                    console.warn('Script failed to load:', event.target.src);
+                    event.preventDefault();
+                }
+                
+                // Handle image loading errors
+                if (event.target && event.target.tagName === 'IMG') {
+                    event.target.style.display = 'none';
+                    console.warn('Image failed to load:', event.target.src);
+                    event.preventDefault();
+                }
+            });
+            
+            // Handle unhandled promise rejections
+            window.addEventListener('unhandledrejection', function(event) {
+                console.warn('Unhandled promise rejection:', event.reason);
+                event.preventDefault();
+            });
         }
     };
     
@@ -531,6 +572,7 @@
         performanceOptimizer.init();
         accessibilityEnhancer.init();
         platformOptimizer.init();
+        platformOptimizer.setupEnterpriseErrorHandling();
         errorHandler.init();
         
         // Mark platform as ready

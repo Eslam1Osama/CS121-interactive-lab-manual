@@ -20,16 +20,8 @@ const CRITICAL_SCRIPTS = [
     '/lab4-modal.js'
 ];
 
-// Large images for optimization
-const LARGE_IMAGES = [
-    '/media/74175_D_FlipFlop.png',
-    '/media/JK_Simulation.png',
-    '/media/D_Simulation.png',
-    '/media/Decoder_2_4.png',
-    '/media/74283_4_bit_Full_Adder.png'
-];
-
-const IMAGE_FILES = [
+// Logo and branding assets
+const BRAND_ASSETS = [
     '/media/favicon-16x16.png',
     '/media/favicon-32x32.png',
     '/media/favicon-48x48.png',
@@ -43,68 +35,75 @@ const EXTERNAL_RESOURCES = [
     'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
 ];
 
-// Install event - cache static files with multiple cache strategies
+// Enterprise-level install event with comprehensive error handling
 self.addEventListener('install', function(event) {
     event.waitUntil(
         Promise.all([
             // Cache static files (HTML, CSS, JS)
             caches.open(STATIC_CACHE).then(cache => {
-                return cache.addAll(STATIC_FILES);
+                return cache.addAll(STATIC_FILES).catch(error => {
+                    console.warn('Failed to cache static files:', error);
+                });
             }),
             // Cache critical scripts only
             caches.open(DYNAMIC_CACHE).then(cache => {
-                return cache.addAll(CRITICAL_SCRIPTS);
+                return cache.addAll(CRITICAL_SCRIPTS).catch(error => {
+                    console.warn('Failed to cache critical scripts:', error);
+                });
             }),
-            // Cache images separately
+            // Cache brand assets separately
             caches.open(IMAGE_CACHE).then(cache => {
-                return cache.addAll(IMAGE_FILES);
+                return cache.addAll(BRAND_ASSETS).catch(error => {
+                    console.warn('Failed to cache brand assets:', error);
+                });
             })
         ]).then(() => {
             return self.skipWaiting();
         }).catch(function(error) {
             // Silent error handling for production
+            console.warn('Service Worker installation failed:', error);
         })
     );
 });
 
-// Activate event - clean up old caches
+// Enhanced activate event - clean up old caches
 self.addEventListener('activate', function(event) {
+    const cacheWhitelist = [STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE];
+    
     event.waitUntil(
-        caches.keys()
-            .then(function(cacheNames) {
-                return Promise.all(
-                    cacheNames.map(function(cacheName) {
-                        if (cacheName !== CACHE_NAME) {
-                            return caches.delete(cacheName);
-                        }
-                    })
-                );
-            })
-            .then(function() {
-                return self.clients.claim();
-            })
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (!cacheWhitelist.includes(cacheName)) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(function() {
+            return self.clients.claim();
+        }).catch(function(error) {
+            console.warn('Service Worker activation failed:', error);
+        })
     );
 });
 
-// Fetch event - serve from cache or network
+// Enterprise-level fetch event with comprehensive filtering and error handling
 self.addEventListener('fetch', function(event) {
     const request = event.request;
     const url = new URL(request.url);
     
-    // Skip chrome-extension URLs to prevent cache errors
-    if (url.protocol === 'chrome-extension:') {
+    // Skip unsupported URL schemes to prevent cache errors
+    if (url.protocol === 'chrome-extension:' || 
+        url.protocol === 'moz-extension:' ||
+        url.protocol === 'ms-browser-extension:' ||
+        url.protocol === 'data:' || 
+        url.protocol === 'blob:' ||
+        url.protocol === 'file:') {
         return;
     }
     
-    // Skip data URLs
-    if (url.protocol === 'data:') {
-        return;
-    }
-    
-    // Skip blob URLs
-    if (url.protocol === 'blob:') {
-        return;
-    }
+    // Add null checks for request headers
+    const acceptHeader = request.headers ? request.headers.get('accept') : null;
     
     // Handle navigation requests (HTML pages)
     if (request.mode === 'navigate') {
@@ -114,9 +113,12 @@ self.addEventListener('fetch', function(event) {
                     // Cache the response if it's valid
                     if (response && response.status === 200) {
                         const responseClone = response.clone();
-                        caches.open(CACHE_NAME)
+                        caches.open(STATIC_CACHE)
                             .then(function(cache) {
                                 cache.put(request, responseClone);
+                            })
+                            .catch(function(error) {
+                                console.warn('Failed to cache navigation response:', error);
                             });
                     }
                     return response;
@@ -129,7 +131,7 @@ self.addEventListener('fetch', function(event) {
         return;
     }
     
-    // Handle static assets
+    // Handle static assets with enhanced error handling
     if (request.destination === 'image' || 
         request.destination === 'script' || 
         request.destination === 'style' ||
@@ -151,13 +153,24 @@ self.addEventListener('fetch', function(event) {
                                 return networkResponse;
                             }
                             
-                            // Clone the response
+                            // Clone the response for caching
                             const responseToCache = networkResponse.clone();
                             
+                            // Determine appropriate cache
+                            let targetCache = DYNAMIC_CACHE;
+                            if (request.destination === 'image') {
+                                targetCache = IMAGE_CACHE;
+                            } else if (request.destination === 'script') {
+                                targetCache = DYNAMIC_CACHE;
+                            }
+                            
                             // Cache the response
-                            caches.open(CACHE_NAME)
+                            caches.open(targetCache)
                                 .then(function(cache) {
                                     cache.put(request, responseToCache);
+                                })
+                                .catch(function(error) {
+                                    console.warn('Failed to cache asset:', error);
                                 });
                             
                             return networkResponse;
@@ -178,14 +191,16 @@ self.addEventListener('fetch', function(event) {
         return;
     }
     
-    // Handle API requests (Google Forms, etc.)
+    // Handle external API requests with proper error handling
     if (url.hostname === 'docs.google.com' || 
         url.hostname === 'forms.gle' ||
-        url.hostname === 'script.google.com') {
+        url.hostname === 'script.google.com' ||
+        url.hostname === 'cdnjs.cloudflare.com') {
         
         event.respondWith(
             fetch(request)
                 .catch(function(error) {
+                    console.warn('External resource failed:', error);
                     return new Response('', {
                         status: 503,
                         statusText: 'Service Unavailable'
@@ -202,9 +217,12 @@ self.addEventListener('fetch', function(event) {
                 // Cache successful responses
                 if (response && response.status === 200) {
                     const responseClone = response.clone();
-                    caches.open(CACHE_NAME)
+                    caches.open(DYNAMIC_CACHE)
                         .then(function(cache) {
                             cache.put(request, responseClone);
+                        })
+                        .catch(function(error) {
+                            console.warn('Failed to cache response:', error);
                         });
                 }
                 return response;
@@ -216,7 +234,13 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-// Background sync for offline form submissions
+// Enhanced error handling for unhandled promise rejections
+self.addEventListener('unhandledrejection', function(event) {
+    console.warn('Unhandled promise rejection in service worker:', event.reason);
+    event.preventDefault();
+});
+
+// Background sync for offline functionality
 self.addEventListener('sync', function(event) {
     if (event.tag === 'background-sync') {
         event.waitUntil(doBackgroundSync());
@@ -228,36 +252,40 @@ function doBackgroundSync() {
     return Promise.resolve();
 }
 
-// Push notification handling
+// Push notification handling (enterprise-ready)
 self.addEventListener('push', function(event) {
     if (event.data) {
-        const data = event.data.json();
-        const options = {
-            body: data.body || 'CS121 Lab Manual Update',
-            icon: '/media/favicon-48x48.png',
-            badge: '/media/favicon-32x32.png',
-            vibrate: [100, 50, 100],
-            data: {
-                dateOfArrival: Date.now(),
-                primaryKey: 1
-            },
-            actions: [
-                {
-                    action: 'explore',
-                    title: 'Open Lab Manual',
-                    icon: '/media/favicon-32x32.png'
+        try {
+            const data = event.data.json();
+            const options = {
+                body: data.body || 'CS121 Lab Manual Update',
+                icon: '/media/apple-touch-icon.png',
+                badge: '/media/favicon-32x32.png',
+                vibrate: [100, 50, 100],
+                data: {
+                    dateOfArrival: Date.now(),
+                    primaryKey: 1
                 },
-                {
-                    action: 'close',
-                    title: 'Close',
-                    icon: '/media/favicon-32x32.png'
-                }
-            ]
-        };
-        
-        event.waitUntil(
-            self.registration.showNotification('CS121 Lab Manual', options)
-        );
+                actions: [
+                    {
+                        action: 'explore',
+                        title: 'Open Lab Manual',
+                        icon: '/media/favicon-32x32.png'
+                    },
+                    {
+                        action: 'close',
+                        title: 'Close',
+                        icon: '/media/favicon-32x32.png'
+                    }
+                ]
+            };
+            
+            event.waitUntil(
+                self.registration.showNotification('CS121 Lab Manual', options)
+            );
+        } catch (error) {
+            console.warn('Failed to parse push notification data:', error);
+        }
     }
 });
 
@@ -270,9 +298,4 @@ self.addEventListener('notificationclick', function(event) {
             clients.openWindow('/')
         );
     }
-});
-
-// Error handling for unhandled promise rejections
-self.addEventListener('unhandledrejection', function(event) {
-    event.preventDefault();
 });
