@@ -127,47 +127,6 @@ Comprehensive digital transformation of traditional lab materials:
 - **Performance Monitoring**: Real-time Core Web Vitals tracking
 - **Error Management**: Comprehensive error handling with user-friendly fallbacks
 - **Security Scanning**: Automated vulnerability detection and prevention
-
----
-
-## 🚀 **Quick Start**
-
-### **Prerequisites**
-- Modern web browser (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-- Node.js 16+ (for local development server)
-- Git (for version control and updates)
-
-### **Installation & Setup**
-
-1. **Clone Repository**
-   ```bash
-   git clone https://github.com/EOPeak/cs121-interactive-lab-manual.git
-   cd cs121-interactive-lab-manual
-   ```
-
-2. **Local Development Server**
-   ```bash
-   # Option 1: Node.js server (recommended)
-   node dev-server.js
-   
-   # Option 2: Python server
-   python -m http.server 8080
-   
-   # Option 3: Direct file access
-   # Simply open index.html in your browser
-   ```
-
-3. **Access Application**
-   ```
-   🌐 Local: http://localhost:8080
-   📱 Mobile: http://[your-ip]:8080
-   ```
-
-### **Deployment Options**
-- **One-Click Deploy**: Compatible with Netlify, Vercel, GitHub Pages
-- **Enterprise Hosting**: AWS S3 + CloudFront, Google Cloud Platform
-- **Self-Hosted**: Any web server with HTTPS support
-
 ---
 
 ## 📱 **Usage Guide**
@@ -195,45 +154,6 @@ Comprehensive digital transformation of traditional lab materials:
 4. **White-Label Options**: Customizable branding and institutional themes
 5. **Multi-Language Support**: Internationalization framework included
 6. **Compliance**: FERPA, GDPR, and accessibility regulation compliance
-
----
-
-## 🏗️ **Architecture**
-
-### **Project Structure**
-```
-cs121-interactive-lab-manual/
-├── 📄 index.html                    # Main application entry point
-├── 📄 offline.html                  # PWA offline fallback
-├── 📄 sw.js                         # Service worker with caching strategies
-├── 📁 css/                          # Modular stylesheet architecture
-│   ├── 📄 normalize.css             # Cross-browser normalization
-│   ├── 📄 theme-dark.css            # Dark theme variables
-│   ├── 📄 theme-light.css           # Light theme variables
-│   └── 📄 theme-transition.css      # Smooth theme switching
-├── 📁 js/                           # Core JavaScript modules
-│   └── 📄 platformPreloader.js     # Platform detection & optimization
-├── 📁 media/                        # Optimized multimedia assets
-│   ├── 📄 favicon-*.png             # Multi-resolution favicons
-│   ├── 📄 apple-touch-icon.png      # iOS app icon
-│   ├── 📄 site.webmanifest          # PWA configuration
-│   └── 📄 *.{png,svg,gif}           # Circuit diagrams & illustrations
-├── 📄 lab{1-11}-*.js                # Lab-specific functionality modules
-├── 📄 image-lightbox.js             # Mobile-optimized image viewer
-├── 📄 simulator-expand.js           # Responsive simulator management
-├── 📄 robots.txt                    # SEO crawler directives
-├── 📄 sitemap.xml                   # Search engine site structure
-├── 📄 DEPLOYMENT.md                 # Comprehensive deployment guide
-└── 📄 CONTRIBUTING.md               # Development contribution guidelines
-```
-
-### **Component Architecture**
-- **Modular Design**: Each lab is encapsulated in independent modules
-- **Lazy Loading**: Components load only when needed for optimal performance
-- **Event-Driven**: Decoupled communication through custom event system
-- **Responsive Components**: Mobile-first design with progressive enhancement
-- **Accessibility First**: ARIA labels, semantic HTML, keyboard navigation
-
 ---
 
 ## ⚡ **Performance Metrics**
@@ -449,12 +369,10 @@ Ready to transform your academic materials into engaging digital experiences?
 
 - **🌐 Brand**: EOPeak - Academic Web Conversion Specialists
 - **👨‍💻 Developer**: Eslam Osama Saad
-- **📧 Email**: [eslam@eopeak.com]
+- **📧 Email**: [eo6014501@gmail.com]
 - **📱 Phone**: [+20 155 548 9089](tel:+201555489089)
 - **🌐 Live Project**: [CS121 Interactive Lab Manual](https://cs-121-interactive-lab-manual.vercel.app/)
-- **💼 Portfolio**: [eopeak.com]
-- **🔗 LinkedIn**: [linkedin.com/in/eslam-osama-saad]
-- **🐙 GitHub**: [github.com/EOPeak]
+- **💼 Portfolio**: [https://eslam-portfolio-phi.vercel.app/]
 
 ### **🎯 Service Categories**
 - 🎓 **Educational Web Development**: Interactive learning platform creation
@@ -481,5 +399,6 @@ Ready to transform your academic materials into engaging digital experiences?
 **Built with ❤️ by EOPeak | Advancing Educational Technology Excellence**
 
 *© 2024 EOPeak - Academic Web Conversion Specialists*
+
 
 </div>
