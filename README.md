@@ -22,8 +22,6 @@
 - [✨ Key Features](#-key-features)
 - [🛠️ Technology Stack](#️-technology-stack)
 - [🚀 Quick Start](#-quick-start)
-- [📱 Usage Guide](#-usage-guide)
-- [🏗️ Architecture](#️-architecture)
 - [⚡ Performance Metrics](#-performance-metrics)
 - [🔒 Security & Compliance](#-security--compliance)
 - [📊 SEO & Accessibility](#-seo--accessibility)
@@ -402,3 +400,4 @@ Ready to transform your academic materials into engaging digital experiences?
 
 
 </div>
+
