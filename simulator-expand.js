@@ -55,21 +55,24 @@
 
                 // If the section title (and potentially its wrapper with action buttons) is inside the simulator card,
                 // move the whole header group outside above the Expand button for better mobile layout.
-                var innerHeader = simContainer.querySelector(innerHeaderSelector);
-                if (innerHeader && simContainer.parentNode) {
-                    var headerWrapper = innerHeader.parentElement;
-                    var shouldMoveWrapper = false;
-                    // Move the wrapper instead of only the title when:
-                    // - The wrapper is a direct child of the simulator container, and
-                    // - The wrapper contains any interactive button (e.g., Logic Design button)
-                    if (headerWrapper && headerWrapper.parentElement === simContainer) {
-                        var hasActionButton = !!headerWrapper.querySelector('button');
-                        shouldMoveWrapper = hasActionButton;
-                    }
-                    var nodeToMove = shouldMoveWrapper ? headerWrapper : innerHeader;
-                    // Only move if the node currently lives inside the simulator container
-                    if (nodeToMove && nodeToMove.parentNode && nodeToMove.parentNode === (shouldMoveWrapper ? simContainer : simContainer)) {
-                        simContainer.parentNode.insertBefore(nodeToMove, expandBtn);
+                // Skip header extraction if innerHeaderSelector is null (for Lab 11 consistency)
+                if (innerHeaderSelector) {
+                    var innerHeader = simContainer.querySelector(innerHeaderSelector);
+                    if (innerHeader && simContainer.parentNode) {
+                        var headerWrapper = innerHeader.parentElement;
+                        var shouldMoveWrapper = false;
+                        // Move the wrapper instead of only the title when:
+                        // - The wrapper is a direct child of the simulator container, and
+                        // - The wrapper contains any interactive button (e.g., Logic Design button)
+                        if (headerWrapper && headerWrapper.parentElement === simContainer) {
+                            var hasActionButton = !!headerWrapper.querySelector('button');
+                            shouldMoveWrapper = hasActionButton;
+                        }
+                        var nodeToMove = shouldMoveWrapper ? headerWrapper : innerHeader;
+                        // Only move if the node currently lives inside the simulator container
+                        if (nodeToMove && nodeToMove.parentNode && nodeToMove.parentNode === (shouldMoveWrapper ? simContainer : simContainer)) {
+                            simContainer.parentNode.insertBefore(nodeToMove, expandBtn);
+                        }
                     }
                 }
 

@@ -32,6 +32,25 @@
             this.applyTheme();
             this.setupThemeToggle();
             this.setupSystemThemeListener();
+            // Ensure icon is initialized properly after DOM is ready
+            this.initializeThemeIcon();
+        },
+        
+        initializeThemeIcon: function() {
+            // Additional initialization check for theme icon
+            const checkAndInitIcon = () => {
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) {
+                    this.ensureThemeIconExists(themeToggle, this.currentTheme === 'light');
+                } else {
+                    // Retry if button not found yet
+                    setTimeout(checkAndInitIcon, 100);
+                }
+            };
+            
+            // Run immediately and also after a delay for safety
+            checkAndInitIcon();
+            setTimeout(checkAndInitIcon, 200);
         },
         
         loadTheme: function() {
@@ -107,17 +126,54 @@
                 // Update button style classes
                 themeToggle.classList.toggle('sun', isLight);
                 themeToggle.classList.toggle('moon', !isLight);
-                // Update icon SVG and state
-                const icon = themeToggle.querySelector('.theme-toggle-icon');
-                if (icon) {
-                    if (isLight) {
-                        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 2.25zm0 16.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm9-6.75a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm-16.5 0a.75.75 0 01-.75.75H2.25a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm12.72-5.47a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm-9.19 9.19a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm12.02 1.06a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zm-9.19-9.19a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zM12 6.75a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5z"/></svg>';
-                        icon.classList.remove('toggled');
-                    } else {
-                        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>';
-                        icon.classList.add('toggled');
-                    }
+                // Update icon SVG and state with improved reliability
+                this.ensureThemeIconExists(themeToggle, isLight);
+            }
+        },
+        
+        ensureThemeIconExists: function(themeToggle, isLight) {
+            // Enhanced icon management with fallback and race condition handling
+            let icon = themeToggle.querySelector('.theme-toggle-icon');
+            
+            // If icon element doesn't exist, create it
+            if (!icon) {
+                icon = document.createElement('span');
+                icon.id = 'themeIcon';
+                icon.className = 'theme-toggle-icon';
+                themeToggle.appendChild(icon);
+            }
+            
+            // Ensure icon is visible and has content
+            this.setThemeIconContent(icon, isLight);
+            
+            // Double-check after a brief delay to handle race conditions
+            setTimeout(() => {
+                const iconCheck = themeToggle.querySelector('.theme-toggle-icon');
+                if (!iconCheck || !iconCheck.innerHTML.trim()) {
+                    this.setThemeIconContent(iconCheck || icon, isLight);
                 }
+            }, 50);
+        },
+        
+        setThemeIconContent: function(icon, isLight) {
+            if (!icon) return;
+            
+            try {
+                if (isLight) {
+                    icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 2.25zm0 16.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm9-6.75a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm-16.5 0a.75.75 0 01-.75.75H2.25a.75.75 0 010-1.5h1.5a.75.75 0 01.75.75zm12.72-5.47a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm-9.19 9.19a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06zm12.02 1.06a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zm-9.19-9.19a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 101.06 1.06l1.06-1.06zM12 6.75a5.25 5.25 0 100 10.5 5.25 5.25 0 000-10.5z"/></svg>';
+                    icon.classList.remove('toggled');
+                } else {
+                    icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>';
+                    icon.classList.add('toggled');
+                }
+                
+                // Ensure icon is visible
+                icon.style.display = 'block';
+                icon.style.opacity = '1';
+            } catch (e) {
+                // Fallback to text-based icons if SVG fails
+                icon.innerHTML = isLight ? '☀️' : '🌙';
+                console.warn('Theme icon SVG failed, using fallback');
             }
         },
         
