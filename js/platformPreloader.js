@@ -276,6 +276,7 @@
         
         setupCodeSplitting: function() {
             // Initialize code splitting for lab-specific scripts
+            // Note: Lab 11 loading moved to main scriptLoader to prevent race conditions
             this.labScripts = {
                 'lab1': ['image-lightbox.js', 'lab1-simulator-modal.js'],
                 'lab2': 'lab2-simulator-modal.js',
@@ -286,8 +287,8 @@
                 'lab7': ['image-lightbox.js', 'simulator-expand.js', 'lab7-simulator-expand.js'],
                 'lab8': ['image-lightbox.js', 'simulator-expand.js', 'lab8-simulator-expand.js'],
                 'lab9': ['image-lightbox.js', 'simulator-expand.js', 'lab9-simulator-expand.js'],
-                'lab10': ['image-lightbox.js', 'simulator-expand.js', 'lab10-simulator-expand.js', 'lab10-responsive.js'],
-                'lab11': ['image-lightbox.js', 'simulator-expand.js', 'lab11-simulator-expand.js', 'lab11-modal.js', 'lab11-responsive.js']
+                'lab10': ['image-lightbox.js', 'simulator-expand.js', 'lab10-simulator-expand.js', 'lab10-responsive.js']
+                // lab11: Moved to main scriptLoader for consistent initialization order
             };
             
             this.loadedScripts = new Set();

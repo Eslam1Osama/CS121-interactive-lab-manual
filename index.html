@@ -19745,29 +19745,45 @@
             }
         }
         
+        // Clear any previous initialization states to prevent reload conflicts
+        window.lab11SimulatorExpandInitialized = false;
+        
         // Dynamic Script Loading System for Performance Optimization
         const scriptLoader = {
             loadedScripts: new Set(),
             loadingScripts: new Set(),
             
-            // Lab script mapping
+            // Lab script mapping - Unified and consistent loading order
             labScripts: {
                 'lab3': 'lab3-modal.js',
                 'lab4': 'lab4-modal.js', 
                 'lab5': ['lab5-modal.js', 'lab5-kmap.js'],
                 'lab6': ['lab6-kmap.js', 'lab6-function-h-kmap.js', 'lab6-simplification.js'],
-                'lab11': 'lab11-modal.js'
+                'lab11': ['image-lightbox.js', 'simulator-expand.js', 'lab11-simulator-expand.js', 'lab11-modal.js', 'lab11-responsive.js']
             },
             
-            // Load script(s) for a specific lab
+            // Load script(s) for a specific lab with dependency order enforcement
             loadLabScripts: function(labId) {
                 const scripts = this.labScripts[labId];
                 if (!scripts) return Promise.resolve();
                 
                 const scriptArray = Array.isArray(scripts) ? scripts : [scripts];
-                const loadPromises = scriptArray.map(script => this.loadScript(script));
                 
+                // For Lab 11: enforce sequential loading to prevent race conditions
+                if (labId === 'lab11') {
+                    return this.loadScriptsSequentially(scriptArray);
+                }
+                
+                // For other labs: parallel loading (existing behavior)
+                const loadPromises = scriptArray.map(script => this.loadScript(script));
                 return Promise.all(loadPromises);
+            },
+            
+            // Sequential script loading to prevent initialization race conditions
+            loadScriptsSequentially: function(scripts) {
+                return scripts.reduce((promise, script) => {
+                    return promise.then(() => this.loadScript(script));
+                }, Promise.resolve());
             },
             
             // Load individual script
